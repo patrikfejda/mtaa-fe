@@ -1,11 +1,17 @@
+import {Button, extendTheme, NativeBaseProvider} from 'native-base';
 import React from 'react';
-import {Button, View} from 'react-native';
 
+const config = {
+  useSystemColorMode: false,
+  initialColorMode: 'dark',
+};
+
+const customTheme = extendTheme({config});
 function App(): JSX.Element {
   return (
-    <View>
-      <Button title="HELLO" />
-    </View>
+    <NativeBaseProvider theme={customTheme}>
+      <Button>HELLO</Button>
+    </NativeBaseProvider>
   );
 }
 
