@@ -1,6 +1,7 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
+  Chats: undefined;
   Login: undefined;
   Register: undefined;
 };

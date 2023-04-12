@@ -1,4 +1,4 @@
-import {NativeStackHeaderProps} from '@react-navigation/native-stack';
+import type {NativeStackHeaderProps} from '@react-navigation/native-stack';
 import {HStack, Icon, IconButton, StatusBar, Text, useToken} from 'native-base';
 import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

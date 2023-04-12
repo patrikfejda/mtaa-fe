@@ -1,10 +1,20 @@
 import {Box, Button, FormControl, Input, Text, View, VStack} from 'native-base';
-import React from 'react';
-import {RootStackScreenProps} from '../types/navigation';
+import React, {useState} from 'react';
+import {useRegisterMutation} from '../services/api';
+import type {RootStackScreenProps} from '../types/navigation';
 
 export default function RegisterScreen({
   navigation,
 }: RootStackScreenProps<'Register'>) {
+  const [form, setForm] = useState({
+    email: '',
+    username: '',
+    password: '',
+  });
+
+  const [register, {isLoading}] = useRegisterMutation();
+
+  // TODO  !fix on backend!: register api accepts empty strings :D
   return (
     <View>
       <Box pt="6" pb="5" alignItems="center">
@@ -17,29 +27,47 @@ export default function RegisterScreen({
         <VStack space="5">
           <FormControl>
             <FormControl.Label>Email</FormControl.Label>
-            <Input variant="filled" type="text" />
+            <Input
+              onChangeText={value => setForm({...form, email: value})}
+              variant="filled"
+              type="text"
+            />
           </FormControl>
 
           <FormControl>
             <FormControl.Label>Username</FormControl.Label>
-            <Input variant="filled" type="text" />
+            <Input
+              onChangeText={value => setForm({...form, username: value})}
+              variant="filled"
+              type="text"
+            />
           </FormControl>
 
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
-            <Input variant="filled" type="password" />
+            <Input
+              onChangeText={value => setForm({...form, password: value})}
+              variant="filled"
+              type="password"
+            />
           </FormControl>
         </VStack>
 
         <VStack alignItems="center">
-          <Button width="full">Register</Button>
+          <Button
+            onPress={() => register(form)}
+            isDisabled={!form.email || !form.username || !form.password}
+            isLoading={isLoading}
+            width="full">
+            Register
+          </Button>
 
           <Text mt="6" mb="2">
             Already have an account?
           </Text>
           <Button
-            variant="outline"
-            onPress={() => navigation.navigate('Login')}>
+            onPress={() => navigation.navigate('Login')}
+            variant="outline">
             Login
           </Button>
         </VStack>

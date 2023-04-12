@@ -1,19 +1,17 @@
-import {Box, Button, FormControl, Input, Text, View, VStack} from 'native-base';
+import {Box, Button, FormControl, Input, Text, VStack, View} from 'native-base';
 import React, {useState} from 'react';
-import {RootStackScreenProps} from '../types/navigation';
+import {useLoginMutation} from '../services/api';
+import type {RootStackScreenProps} from '../types/navigation';
 
 export default function LoginScreen({
   navigation,
 }: RootStackScreenProps<'Login'>) {
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     username: '',
     password: '',
   });
 
-  function onSubmit() {
-    // TODO
-    // console.log('FORM DATA', formData);
-  }
+  const [login, {isLoading}] = useLoginMutation();
 
   return (
     <View>
@@ -28,9 +26,7 @@ export default function LoginScreen({
           <FormControl>
             <FormControl.Label>Username</FormControl.Label>
             <Input
-              onChangeText={value =>
-                setFormData({...formData, username: value})
-              }
+              onChangeText={value => setForm({...form, username: value})}
               type="text"
               variant="filled"
             />
@@ -39,9 +35,7 @@ export default function LoginScreen({
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
             <Input
-              onChangeText={value =>
-                setFormData({...formData, password: value})
-              }
+              onChangeText={value => setForm({...form, password: value})}
               type="password"
               variant="filled"
             />
@@ -49,7 +43,10 @@ export default function LoginScreen({
         </VStack>
 
         <VStack alignItems="center">
-          <Button onPress={onSubmit} width="full">
+          <Button
+            onPress={() => login(form)}
+            isLoading={isLoading}
+            width="full">
             Login
           </Button>
 

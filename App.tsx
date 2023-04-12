@@ -1,18 +1,26 @@
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {extendTheme, NativeBaseProvider} from 'native-base';
+import {NativeBaseProvider, extendTheme} from 'native-base';
 import React from 'react';
-import AppBar from './src/components/AppBar';
-import LoginScreen from './src/screens/LoginScreen';
-import RegisterScreen from './src/screens/RegisterScreen';
-import {RootStackParamList} from './src/types/navigation';
+import {Dimensions} from 'react-native';
+import {Provider as StoreProvider} from 'react-redux';
+import MainNavigator from './src/navigators/MainNavigator';
+import {store} from './src/store';
 
 const nativeBaseConfig = {
   useSystemColorMode: false,
   initialColorMode: 'dark',
+  components: {
+    Toast: {
+      baseStyle: {
+        width: Dimensions.get('window').width,
+      },
+    },
+  },
 };
 
-const nativeBaseTheme = extendTheme({config: nativeBaseConfig});
+const nativeBaseTheme = extendTheme({
+  config: nativeBaseConfig,
+});
 const navigationTheme = {
   ...DarkTheme,
   colors: {
@@ -21,20 +29,15 @@ const navigationTheme = {
   },
 };
 
-const RootStack = createNativeStackNavigator<RootStackParamList>();
-
 function App(): JSX.Element {
   return (
-    <NavigationContainer theme={navigationTheme}>
-      <NativeBaseProvider theme={nativeBaseTheme}>
-        <RootStack.Navigator
-          screenOptions={{animation: 'none', header: AppBar}}
-          initialRouteName="Login">
-          <RootStack.Screen name="Login" component={LoginScreen} />
-          <RootStack.Screen name="Register" component={RegisterScreen} />
-        </RootStack.Navigator>
-      </NativeBaseProvider>
-    </NavigationContainer>
+    <StoreProvider store={store}>
+      <NavigationContainer theme={navigationTheme}>
+        <NativeBaseProvider theme={nativeBaseTheme}>
+          <MainNavigator />
+        </NativeBaseProvider>
+      </NavigationContainer>
+    </StoreProvider>
   );
 }
 
