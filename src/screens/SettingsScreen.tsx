@@ -1,4 +1,6 @@
 import {Box, Button, FormControl, Input, Text, VStack, View, Image} from 'native-base';
+import {HStack, Icon, IconButton, StatusBar, useToken, CheckIcon} from 'native-base';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {selectIsLoggedIn} from '../store/authSlice';
 import {useAppSelector} from '../store/hooks';
 import type {RootStackScreenProps} from '../types/navigation';
@@ -38,13 +40,15 @@ export default function SettingsScreen({
             />
           </FormControl>
         </VStack>
-
         <VStack alignItems="center">
           <Button
             onPress={() => login(form)}
             isLoading={isLoading}
             width="full">
-            Log Out
+              <HStack>
+                <Icon as={MaterialIcons} color="text.50" name="logout" />
+                <Text> Log Out</Text>
+              </HStack>
           </Button>
         </VStack>
       </VStack>
