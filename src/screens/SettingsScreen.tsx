@@ -1,4 +1,4 @@
-import {Box, Button, FormControl, Input, Text, VStack, View} from 'native-base';
+import {Box, Button, FormControl, Input, Text, VStack, View, Image} from 'native-base';
 import {selectIsLoggedIn} from '../store/authSlice';
 import {useAppSelector} from '../store/hooks';
 import type {RootStackScreenProps} from '../types/navigation';
@@ -20,6 +20,14 @@ export default function SettingsScreen({
       <Text>This page is under construction</Text>
 
       <VStack px="2" space="9">
+
+        <Box alignItems="center">
+          <Image source={{uri: "https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s"}}
+            borderRadius={100} alt="Alternate Text" size="xl" />
+          <Text fontSize="2xl" fontWeight="bold">
+            Patrik Fejda
+          </Text>
+        </Box>
         <VStack space="5">
           <FormControl>
             <FormControl.Label>Display Name</FormControl.Label>
