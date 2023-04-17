@@ -22,53 +22,31 @@ const ChatScreen = () => {
       <View style={styles.messagesContainer}>
 
         {/* Message 1 */}
-        <HStack alignItems="flex-end" mb={3}>
-          <Box alignItems="center">
-            <Image
-              source={{
-                uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
-              }}
-              borderRadius={100}
-              alt="Alternate Text"
-              size="xs"
-              mr={2}
-            />
-          </Box>
-          <Box
-            py={2}
-            px={4}
-            borderRadius={10}
-            bgColor="gray.200"
-            alignSelf="flex-end"
-          >
-            <Text fontSize="md">Ahoj, ako sa mas?</Text>
-          </Box>
-        </HStack>
-
-
-        {/* Message 2 */}
-        <HStack alignItems="flex-end" mb={3}>
-          <Box alignItems="center">
-            <Image
-              source={{
-                uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
-              }}
-              borderRadius={100}
-              alt="Alternate Text"
-              size="xs"
-              mr={2}
-            />
-          </Box>
-          <Box
-            py={2}
-            px={4}
-            borderRadius={10}
-            bgColor="gray.200"
-            alignSelf="flex-end"
-          >
-            <Text fontSize="md">Dnes som ta nevidel vobec</Text>
-          </Box>
-        </HStack>
+        <Box>
+          <Text>Patrik Fejda</Text>
+          <HStack alignItems="flex-end" mb={3}>
+            <Box alignItems="center">
+              <Image
+                source={{
+                  uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
+                }}
+                borderRadius={100}
+                alt="Alternate Text"
+                size="xs"
+                mr={2}
+                />
+            </Box>
+            <Box
+              py={2}
+              px={4}
+              borderRadius={10}
+              bgColor="gray.200"
+              alignSelf="flex-end"
+              >
+              <Text fontSize="md">Ahoj, ako sa mas?</Text>
+            </Box>
+          </HStack>
+        </Box>
 
       </View>
       <View style={styles.inputContainer}>
