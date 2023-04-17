@@ -23,7 +23,6 @@ const ChatScreen = () => {
 
         {/* Message 1 */}
         <Box>
-          <Text>Patrik Fejda</Text>
           <HStack alignItems="flex-end" mb={3}>
             <Box alignItems="center">
               <Image
@@ -36,15 +35,47 @@ const ChatScreen = () => {
                 mr={2}
                 />
             </Box>
-            <Box
-              py={2}
-              px={4}
-              borderRadius={10}
-              bgColor="gray.700"
-              alignSelf="flex-end"
-              >
-              <Text fontSize="md">Ahoj, ako sa mas?</Text>
+            <VStack>
+              <Text style={styles.senderName}>Patrik Fejda</Text>
+              <Box
+                py={2}
+                px={4}
+                borderRadius={10}
+                bgColor="gray.700"
+                alignSelf="flex-end"
+                >
+                <Text fontSize="md">Ahoj, ako sa mas?</Text>
+              </Box>
+            </VStack>
+          </HStack>
+        </Box>
+
+        {/* Message 2 */}
+        <Box>
+          <HStack alignItems="flex-end" mb={3}>
+            <Box alignItems="center">
+              <Image
+                source={{
+                  uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
+                }}
+                borderRadius={100}
+                alt="Alternate Text"
+                size="xs"
+                mr={2}
+                />
             </Box>
+            <VStack>
+              <Text style={styles.senderName}>Patrik Fejda</Text>
+              <Box
+                py={2}
+                px={4}
+                borderRadius={10}
+                bgColor="gray.700"
+                alignSelf="flex-end"
+                >
+                <Text fontSize="md">Mam taky super business pre teba. Mozes robit z domu a si sam sebe panom.</Text>
+              </Box>
+            </VStack>
           </HStack>
         </Box>
 
@@ -81,8 +112,7 @@ const styles = StyleSheet.create({
   senderName: {
     fontSize: 12,
     fontWeight: 'bold',
-    marginLeft: 10,
-    marginBottom: 5,
+    marginTop: 5,
   },
   messageBubble: {
     maxWidth: '80%',
