@@ -88,21 +88,11 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   messagesContainer: {
-    flex: 1,
     padding: 10,
-  },
-  messageContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginVertical: 5,
   },
   senderName: {
     fontWeight: 'bold',
-    marginTop: 5,
   },
 });
 
