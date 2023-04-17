@@ -22,8 +22,7 @@ const ChatScreen = () => {
       <View style={styles.messagesContainer}>
 
         {/* Message 1 */}
-
-        <HStack>
+        <HStack alignItems="flex-end" mb={3}>
           <Box alignItems="center">
             <Image
               source={{
@@ -32,17 +31,23 @@ const ChatScreen = () => {
               borderRadius={100}
               alt="Alternate Text"
               size="xs"
-              />
+              mr={2}
+            />
           </Box>
-          <Box alignItems="center">
-            <Text>Ahoj, ako sa mas?</Text>
+          <Box
+            py={2}
+            px={4}
+            borderRadius={10}
+            bgColor="gray.200"
+            alignSelf="flex-end"
+          >
+            <Text fontSize="md">Ahoj, ako sa mas?</Text>
           </Box>
         </HStack>
 
 
         {/* Message 2 */}
-
-        <HStack>
+        <HStack alignItems="flex-end" mb={3}>
           <Box alignItems="center">
             <Image
               source={{
@@ -51,10 +56,17 @@ const ChatScreen = () => {
               borderRadius={100}
               alt="Alternate Text"
               size="xs"
-              />
+              mr={2}
+            />
           </Box>
-          <Box alignItems="center">
-            <Text>Dnes som ta nevidel vobec</Text>
+          <Box
+            py={2}
+            px={4}
+            borderRadius={10}
+            bgColor="gray.200"
+            alignSelf="flex-end"
+          >
+            <Text fontSize="md">Dnes som ta nevidel vobec</Text>
           </Box>
         </HStack>
 
@@ -82,6 +94,20 @@ const styles = StyleSheet.create({
   messagesContainer: {
     flex: 1,
     padding: 10,
+  },
+  messageContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginVertical: 5,
+  },
+  senderName: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    marginBottom: 5,
+  },
+  messageBubble: {
+    maxWidth: '80%',
   },
   inputContainer: {
     flexDirection: 'row',
