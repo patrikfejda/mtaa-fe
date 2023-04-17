@@ -14,7 +14,6 @@ export default function RegisterScreen({
 
   const [register, {isLoading}] = useRegisterMutation();
 
-  // TODO  !fix on backend!: register api accepts empty strings :D
   return (
     <View>
       <Box pt="6" pb="5" alignItems="center">

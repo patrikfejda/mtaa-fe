@@ -1,3 +1,4 @@
+import type {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 import type {NativeStackHeaderProps} from '@react-navigation/native-stack';
 import {HStack, Icon, IconButton, StatusBar, Text, useToken} from 'native-base';
 import React from 'react';
@@ -8,7 +9,7 @@ export default function AppBar({
   route,
   options,
   back,
-}: NativeStackHeaderProps) {
+}: NativeStackHeaderProps | BottomTabHeaderProps) {
   const muted900 = useToken('colors', 'muted.900');
 
   const headerRightIcons = options.headerRight?.({

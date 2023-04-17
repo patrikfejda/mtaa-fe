@@ -1,17 +1,16 @@
-import {Text, View} from 'native-base';
+import {Button, View} from 'native-base';
 import React from 'react';
-import {selectIsLoggedIn} from '../store/authSlice';
-import {useAppSelector} from '../store/hooks';
-import type {RootStackScreenProps} from '../types/navigation';
+import type {TabScreenProps} from '../types/navigation';
 
-export default function ChatsScreen({
-  navigation,
-}: RootStackScreenProps<'Chats'>) {
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
-
+export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
   return (
     <View>
-      <Text>{JSON.stringify(isLoggedIn)}</Text>
+      <Button
+        onPress={() =>
+          navigation.navigate('Messages', {name: 'Custom message title'})
+        }>
+        Messages screen
+      </Button>
     </View>
   );
 }
