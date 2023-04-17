@@ -40,7 +40,7 @@ const ChatScreen = () => {
               py={2}
               px={4}
               borderRadius={10}
-              bgColor="gray.200"
+              bgColor="gray.700"
               alignSelf="flex-end"
               >
               <Text fontSize="md">Ahoj, ako sa mas?</Text>
