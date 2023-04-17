@@ -30,8 +30,8 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
 
         {/* Message */}
         <Box>
-          <HStack alignItems="flex-end" mb={2}>
-            <Box alignItems="center">
+          <HStack>
+            <Box>
               <Image
                 source={{
                   uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
@@ -43,16 +43,17 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
                 />
             </Box>
             <VStack>
-              <Text style={styles.senderName}>Patrik Fejda</Text>
-              <Text fontSize="md">Ahoj, ako sa mas.</Text>
+              <Text fontSize="lg" style={styles.senderName}>Patrik Fejda</Text>
+              <Text fontSize="md">Ahoj, ako sa mas?</Text>
             </VStack>
           </HStack>
         </Box>
 
+
         {/* Message */}
         <Box>
-          <HStack alignItems="flex-end" mb={2}>
-            <Box alignItems="center">
+          <HStack>
+            <Box>
               <Image
                 source={{
                   uri: 'https://i.pinimg.com/originals/a2/6b/76/a26b761a290847ccf5436460550c4863.png',
@@ -64,12 +65,11 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
                 />
             </Box>
             <VStack>
-              <Text style={styles.senderName}>The chatty squad</Text>
+              <Text fontSize="lg" style={styles.senderName}>The chatty squad</Text>
               <Text fontSize="md">Dneska Baron??</Text>
             </VStack>
           </HStack>
         </Box>
-
       </View>
     </View>
   );
