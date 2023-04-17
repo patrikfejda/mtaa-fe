@@ -44,11 +44,29 @@ const ChatScreen = () => {
                 bgColor="gray.700"
                 alignSelf="flex-end"
                 >
-                <Text fontSize="md">Mam taky super business pre teba. Mozes robit z domu a si sam sebe panom.</Text>
+                <Text fontSize="md">Ahoj, ako sa mas.</Text>
               </Box>
             </VStack>
           </HStack>
         </Box>
+
+        {/* Message */}
+        <Box>
+          <HStack alignItems="flex-end" mb={3}>
+            <VStack>
+              <Box
+                py={2}
+                px={4}
+                borderRadius={10}
+                bgColor="blue.900"
+                alignSelf="flex-end"
+                >
+                <Text fontSize="md">Mam sa super.</Text>
+              </Box>
+            </VStack>
+          </HStack>
+        </Box>
+
 
       </View>
       <View style={styles.inputContainer}>
