@@ -83,18 +83,6 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
         </Box>
 
       </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Type message"
-        />
-        <IconButton
-            icon={<Icon as={MaterialIcons} color="text.50" name="send" />}
-            colorScheme="light"
-            size="lg"
-            p="0"
-          />
-      </View>
     </View>
   );
 };
@@ -115,23 +103,6 @@ const styles = StyleSheet.create({
   senderName: {
     fontWeight: 'bold',
     marginTop: 5,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderTopWidth: 1,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#ffffff',
-    color: '#ffffff',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginRight: 10,
   },
 });
 
