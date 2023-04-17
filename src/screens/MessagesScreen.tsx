@@ -85,9 +85,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 5,
   },
-  messageBubble: {
-    maxWidth: '80%',
-  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
