@@ -50,8 +50,8 @@ const ChatScreen = () => {
           </HStack>
         </Box>
 
-        {/* Message */}
-        <Box>
+        {/* Your Message */}
+        <Box alignSelf="flex-end">
           <HStack alignItems="flex-end" mb={3}>
             <VStack>
               <Box
@@ -61,12 +61,57 @@ const ChatScreen = () => {
                 bgColor="blue.900"
                 alignSelf="flex-end"
                 >
-                <Text fontSize="md">Mam sa super.</Text>
+                <Text fontSize="md" color="white">Mam sa super.</Text>
               </Box>
             </VStack>
           </HStack>
         </Box>
 
+      {/* Message */}
+      <Box>
+          <HStack alignItems="flex-end" mb={3}>
+            <Box alignItems="center">
+              <Image
+                source={{
+                  uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
+                }}
+                borderRadius={100}
+                alt="Alternate Text"
+                size="xs"
+                mr={2}
+                />
+            </Box>
+            <VStack>
+              <Text style={styles.senderName}>Patrik Fejda</Text>
+              <Box
+                py={2}
+                px={4}
+                borderRadius={10}
+                bgColor="gray.700"
+                alignSelf="flex-end"
+                >
+                <Text fontSize="md">Super, tesim sa.</Text>
+              </Box>
+            </VStack>
+          </HStack>
+        </Box>
+
+        {/* Your Message */}
+        <Box alignSelf="flex-end">
+          <HStack alignItems="flex-end" mb={3}>
+            <VStack>
+              <Box
+                py={2}
+                px={4}
+                borderRadius={10}
+                bgColor="blue.900"
+                alignSelf="flex-end"
+                >
+                <Text fontSize="md" color="white">xDxD</Text>
+              </Box>
+            </VStack>
+          </HStack>
+        </Box>
 
       </View>
       <View style={styles.inputContainer}>
