@@ -30,7 +30,7 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
 
         {/* Message */}
         <Box>
-          <HStack alignItems="flex-end" mb={3}>
+          <HStack alignItems="flex-end" mb={2}>
             <Box alignItems="center">
               <Image
                 source={{
@@ -44,20 +44,14 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
             </Box>
             <VStack>
               <Text style={styles.senderName}>Patrik Fejda</Text>
-              <Box
-                py={2}
-                px={4}
-                alignSelf="flex-end"
-                >
-                <Text fontSize="md">Ahoj, ako sa mas.</Text>
-              </Box>
+              <Text fontSize="md">Ahoj, ako sa mas.</Text>
             </VStack>
           </HStack>
         </Box>
 
         {/* Message */}
         <Box>
-          <HStack alignItems="flex-end" mb={3}>
+          <HStack alignItems="flex-end" mb={2}>
             <Box alignItems="center">
               <Image
                 source={{
@@ -71,13 +65,7 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
             </Box>
             <VStack>
               <Text style={styles.senderName}>The chatty squad</Text>
-              <Box
-                py={2}
-                px={4}
-                alignSelf="flex-end"
-                >
-                <Text fontSize="md">Dneska Baron??</Text>
-              </Box>
+              <Text fontSize="md">Dneska Baron??</Text>
             </VStack>
           </HStack>
         </Box>
