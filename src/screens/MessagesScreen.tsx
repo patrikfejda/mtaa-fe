@@ -113,6 +113,31 @@ const ChatScreen = () => {
           </HStack>
         </Box>
 
+        {/* Your Message */}
+        <Box alignSelf="flex-end">
+          <HStack alignItems="flex-end" mb={3}>
+            <VStack>
+              <Box
+                py={2}
+                px={4}
+                borderRadius={10}
+                bgColor="blue.900"
+                alignSelf="flex-end"
+                >
+                <Image
+                source={{
+                  uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
+                }}
+                alt="Alternate Text"
+                size="2xl"
+                mr={2}
+                />
+                <Text fontSize="md" color="white">Tu vyzeras jak keby si sa prave posral</Text>
+              </Box>
+            </VStack>
+          </HStack>
+        </Box>
+
       </View>
       <View style={styles.inputContainer}>
         <TextInput
