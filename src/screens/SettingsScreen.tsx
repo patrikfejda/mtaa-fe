@@ -58,26 +58,6 @@ export default function SettingsScreen({
 
   return (
     <View>
-      < Button onPress = {
-        () =>
-        ImagePicker.launchImageLibrary({
-            mediaType: 'photo',
-            includeBase64: false,
-            maxHeight: 200,
-            maxWidth: 200,
-          },
-          (response) => {
-            console.log(response);
-            this.setState({
-              resourcePath: response
-            });
-          },
-        )
-      }
-      title = "Select Image" / >
-
-      <Text>This page is under construction</Text>
-
       <VStack px="2" space="9">
         <Box alignItems="center" position="relative">
           {/* uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s', */}
