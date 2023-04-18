@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import type {AuthResponse, LoginRequest, RegisterRequest} from '../types/api';
+import type {AuthResponse, LoginRequest, RegisterRequest, UserChangeRequest} from '../types/api';
 import type {AppRootState} from '../types/store';
 
 export const api = createApi({
@@ -21,7 +21,29 @@ export const api = createApi({
     register: builder.mutation<AuthResponse, RegisterRequest>({
       query: request => ({url: 'auth/register', method: 'POST', body: request}),
     }),
+    changeUser: builder.mutation<AuthResponse, UserChangeRequest>({
+      query: (request) => {
+        const formData = new FormData();
+        formData.append('displayName', request.displayName);
+        if (request.profilePhoto) {
+          console.log("1 request.profilePhoto", request.profilePhoto);
+          formData.append('profilePhoto', request.profilePhoto);
+        }
+        else {
+          console.log("2 request.profilePhoto is not set");
+          console.log(">>", request.profilePhoto)
+        }
+        return {
+          url: 'users/me',
+          method: 'PUT',
+          body: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        };
+      },
+    }),
   }),
 });
 
-export const {useLoginMutation, useRegisterMutation} = api;
+export const {useLoginMutation, useRegisterMutation, useChangeUserMutation} = api;

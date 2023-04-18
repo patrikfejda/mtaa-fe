@@ -11,6 +11,11 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface UserChangeRequest {
+  displayName: string;
+  profilePhoto: File;
+}
+
 export interface RegisterRequest {
   username: string;
   password: string;
