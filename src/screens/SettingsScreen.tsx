@@ -13,7 +13,7 @@ import {
 } from 'native-base';
 import React, {useState} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useLoginMutation} from '../services/api';
+import {useChangeUserMutation} from '../services/api';
 import {selectIsLoggedIn, logout} from '../store/authSlice';
 import {useAppSelector, useAppDispatch} from '../store/hooks';
 import type {TabScreenProps} from '../types/navigation';
@@ -23,10 +23,10 @@ export default function SettingsScreen({
 }: TabScreenProps<'Settings'>) {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const [form, setForm] = useState({
-    username: '',
-    password: '',
+    displayname: '',
+    profilePhoto: null,
   });
-  const [login, {isLoading}] = useLoginMutation();
+  const [login, {isLoading}] = useChangeUserMutation();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
 
