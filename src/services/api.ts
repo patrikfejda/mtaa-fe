@@ -26,11 +26,12 @@ export const api = createApi({
         const formData = new FormData();
         formData.append('displayName', request.displayName);
         if (request.profilePhoto) {
-          console.log("request.profilePhoto", request.profilePhoto)
+          console.log("1 request.profilePhoto", request.profilePhoto);
           formData.append('profilePhoto', request.profilePhoto);
         }
         else {
-          console.log("request.profilePhoto is not set")
+          console.log("2 request.profilePhoto is not set");
+          console.log(">>", request.profilePhoto)
         }
         return {
           url: 'users/me',

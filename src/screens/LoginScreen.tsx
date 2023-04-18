@@ -7,8 +7,8 @@ export default function LoginScreen({
   navigation,
 }: RootStackScreenProps<'Login'>) {
   const [form, setForm] = useState({
-    username: '',
-    password: '',
+    username: '123456789',
+    password: '123456789',
   });
 
   const [login, {isLoading}] = useLoginMutation();

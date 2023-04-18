@@ -1,4 +1,5 @@
 import { launchImageLibrary } from "react-native-image-picker";
+import RNFS from 'react-native-fs';
 import {
   Box,
   Button,
@@ -27,7 +28,7 @@ export default function SettingsScreen({
   const user = useAppSelector(state => state.auth.user);
   const [form, setForm] = useState({
     displayName: user.displayName,
-    profilePhoto: null,
+    profilePhoto: "",
   });
 
   const handleLogout = () => {
@@ -48,14 +49,20 @@ export default function SettingsScreen({
         } else if (response.error) {
           console.log('ImagePicker Error: ', response.error);
         } else {
-          // You can now update the user's profile photo URL in the state
-          console.log('selected image', response);
-          setForm({...form, profilePhoto: response})
-          changeUser(form);
+          // const updatedForm = {...form, profilePhoto: response.uri};
+          // setForm(updatedForm);
+          // changeUser(form);
+
+          const file = new File([response.uri], response.fileName, {
+            type: response.type,
+          });
+          setForm({...form, profilePhoto: file});
+          changeUser({...form, profilePhoto: file});
         }
       },
     );
   };
+  
 
 
   return (
