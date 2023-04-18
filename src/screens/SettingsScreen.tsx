@@ -13,8 +13,8 @@ import {
 import React, {useState} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useLoginMutation} from '../services/api';
-import {selectIsLoggedIn} from '../store/authSlice';
-import {useAppSelector} from '../store/hooks';
+import {selectIsLoggedIn, logout} from '../store/authSlice';
+import {useAppSelector, useAppDispatch} from '../store/hooks';
 import type {TabScreenProps} from '../types/navigation';
 
 export default function SettingsScreen({
@@ -26,6 +26,11 @@ export default function SettingsScreen({
     password: '',
   });
   const [login, {isLoading}] = useLoginMutation();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <View>
@@ -56,10 +61,7 @@ export default function SettingsScreen({
           </FormControl>
         </VStack>
         <VStack alignItems="center">
-          <Button
-            onPress={() => login(form)}
-            isLoading={isLoading}
-            width="full">
+          <Button onPress={handleLogout} width="full">
             <HStack>
               <Icon as={MaterialIcons} color="text.50" name="logout" />
               <Text> Log Out</Text>
