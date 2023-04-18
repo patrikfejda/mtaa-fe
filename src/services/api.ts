@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import type {AuthResponse, LoginRequest, RegisterRequest, UserChangeRequest} from '../types/api';
+import type {AuthResponse, LoginRequest, RegisterRequest, UserChangeRequest, StatusRequest} from '../types/api';
 import type {AppRootState} from '../types/store';
 
 export const api = createApi({
