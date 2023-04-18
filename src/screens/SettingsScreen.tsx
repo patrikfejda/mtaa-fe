@@ -49,31 +49,40 @@ export default function SettingsScreen({
         } else if (response.error) {
           console.log('ImagePicker Error: ', response.error);
         } else {
-          // const updatedForm = {...form, profilePhoto: response.uri};
-          // setForm(updatedForm);
-          // changeUser(form);
+          // Create a file object from the selected image
+          console.log(response)
+          const fileUri = response.assets[0].uri;
+          const fileName = response.assets[0].fileName;
+          const fileType = response.assets[0].type;
+          console.log(fileUri)
+          console.log(fileType)
 
-          const file = new File([response.uri], response.fileName, {
-            type: response.type,
-          });
+          const file = {
+            uri: fileUri,
+            name: fileName,
+            type: fileType,
+          };
+
+          // Update the form state with the new file object
           setForm({...form, profilePhoto: file});
+
+          // Call the changeUser mutation with the updated form data
           changeUser({...form, profilePhoto: file});
         }
       },
     );
   };
-  
+
 
 
   return (
     <View>
       <VStack px="2" space="9">
         <Box alignItems="center" position="relative">
-          {/* uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s', */}
           <Image
             source={
               user.profilePhotoUrl
-                ? { uri: user.profilePhotoUrl }
+                ? { uri: "http://localhost:8000"+user.profilePhotoUrl }
                 : {
                     uri: `https://ui-avatars.com/api/?name=${user.displayName}&background=random&size=200`,
                   }
