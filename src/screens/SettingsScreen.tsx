@@ -22,7 +22,7 @@ export default function SettingsScreen({
 }: TabScreenProps<'Settings'>) {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const [form, setForm] = useState({
-    displayName: '',
+    username: '',
     password: '',
   });
   const [login, {isLoading}] = useLoginMutation();
@@ -33,14 +33,16 @@ export default function SettingsScreen({
     dispatch(logout());
   };
 
-  const handleDisplayNameChange = (value: string) => {
-    setForm({...form, displayName: value});
+  const handleImageChange = () => {
+    // Logic to change user image
   };
 
   return (
     <View>
+      <Text>This page is under construction</Text>
+
       <VStack px="2" space="9">
-        <Box alignItems="center">
+        <Box alignItems="center" position="relative">
           <Image
             source={{
               uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
@@ -49,6 +51,15 @@ export default function SettingsScreen({
             alt="Alternate Text"
             size="xl"
           />
+          <Button
+            position="absolute"
+            bottom={+10}
+            right={+100}
+            bg="blue.500"
+            size="sm"
+            onPress={handleImageChange}>
+            <Icon as={MaterialIcons} name="edit" size="sm" color="white" />
+          </Button>
           <Text fontSize="2xl" fontWeight="bold">
             {user.displayName}
           </Text>
@@ -57,9 +68,9 @@ export default function SettingsScreen({
           <FormControl>
             <FormControl.Label>Display Name</FormControl.Label>
             <Input
-              value={form.displayName || user.displayName}
-              onChangeText={handleDisplayNameChange}
+              onChangeText={value => setForm({...form, username: value})}
               type="text"
+              defaultValue={user.displayName}
               variant="filled"
             />
           </FormControl>
