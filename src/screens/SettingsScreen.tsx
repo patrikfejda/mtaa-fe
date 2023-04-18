@@ -27,9 +27,14 @@ export default function SettingsScreen({
   });
   const [login, {isLoading}] = useLoginMutation();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.auth.user);
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleImageChange = () => {
+    // Logic to change user image
   };
 
   return (
@@ -37,7 +42,7 @@ export default function SettingsScreen({
       <Text>This page is under construction</Text>
 
       <VStack px="2" space="9">
-        <Box alignItems="center">
+        <Box alignItems="center" position="relative">
           <Image
             source={{
               uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
@@ -46,8 +51,17 @@ export default function SettingsScreen({
             alt="Alternate Text"
             size="xl"
           />
+          <Button
+            position="absolute"
+            bottom={+10}
+            right={+100}
+            bg="blue.500"
+            size="sm"
+            onPress={handleImageChange}>
+            <Icon as={MaterialIcons} name="edit" size="sm" color="white" />
+          </Button>
           <Text fontSize="2xl" fontWeight="bold">
-            Patrik Fejda
+            {user.displayName}
           </Text>
         </Box>
         <VStack space="5">
@@ -56,6 +70,7 @@ export default function SettingsScreen({
             <Input
               onChangeText={value => setForm({...form, username: value})}
               type="text"
+              defaultValue={user.displayName}
               variant="filled"
             />
           </FormControl>
