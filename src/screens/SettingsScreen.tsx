@@ -22,16 +22,19 @@ export default function SettingsScreen({
 }: TabScreenProps<'Settings'>) {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const [form, setForm] = useState({
-    username: '',
+    displayName: '',
     password: '',
   });
   const [login, {isLoading}] = useLoginMutation();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
 
-
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleDisplayNameChange = (value: string) => {
+    setForm({...form, displayName: value});
   };
 
   return (
@@ -56,7 +59,8 @@ export default function SettingsScreen({
           <FormControl>
             <FormControl.Label>Display Name</FormControl.Label>
             <Input
-              onChangeText={value => setForm({...form, username: value})}
+              value={form.displayName || user.displayName}
+              onChangeText={handleDisplayNameChange}
               type="text"
               variant="filled"
             />
