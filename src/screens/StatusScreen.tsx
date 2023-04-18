@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Button } from 'native-base';
 import { Alert } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
+import { check, PERMISSIONS, request, RESULTS, openSettings } from 'react-native-permissions';
+
 
 export default function StatusScreen() {
   const [location, setLocation] = useState(null);
@@ -33,7 +34,19 @@ export default function StatusScreen() {
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
           );
         } else {
-          Alert.alert('Permission denied', 'You need to grant access to location to use this feature.');
+          Alert.alert(
+            'Permission denied',
+            'You need to grant access to location to use this feature.',
+            [
+              { text: 'Cancel', style: 'cancel' },
+              {
+                text: 'Open Settings',
+                onPress: () => {
+                  openSettings().catch(() => console.warn('cannot open settings'));
+                },
+              },
+            ]
+            );
         }
       }
     } catch (error) {
