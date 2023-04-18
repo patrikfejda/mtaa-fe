@@ -1,3 +1,4 @@
+import * as ImagePicker from 'expo-image-picker';
 import {
   Box,
   Button,
@@ -33,8 +34,26 @@ export default function SettingsScreen({
     dispatch(logout());
   };
 
-  const handleImageChange = () => {
-    // Logic to change user image
+
+  const handleImageChange = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (status !== 'granted') {
+      alert('Permission to access media library is required!');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      const { uri } = result;
+      // Logic to update user's profile picture with the selected image
+    }
   };
 
   return (
