@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Button } from 'native-base';
+import { Alert } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 
@@ -32,7 +33,7 @@ export default function StatusScreen() {
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
           );
         } else {
-          console.log('Permission denied', 'You need to grant access to location to use this feature.');
+          Alert.alert('Permission denied', 'You need to grant access to location to use this feature.');
         }
       }
     } catch (error) {
