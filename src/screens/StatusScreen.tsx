@@ -10,7 +10,7 @@ export default function StatusScreen() {
   const [createStatus, {isLoading}] = useStatusMutation();
 
   const [form, setForm] = useState({
-    longtitude: "0",
+    longitude: "0",
     latitude: "0",
     text: 'AHOJKY',
   });
@@ -29,7 +29,7 @@ export default function StatusScreen() {
       if (permissionStatus === RESULTS.GRANTED) {
         Geolocation.getCurrentPosition(
           (position) => {
-            setForm({...form, longtitude: position.coords.longitude.toString(), latitude: position.coords.latitude.toString()});
+            setForm({...form, longitude: position.coords.longitude.toString(), latitude: position.coords.latitude.toString()});
           },
           (error) => {
             console.log(error);
@@ -41,7 +41,7 @@ export default function StatusScreen() {
         if (permissionRequest === RESULTS.GRANTED) {
           await Geolocation.getCurrentPosition(
             (position) => {
-              setForm({...form, longtitude: position.coords.longitude, latitude: position.coords.latitude})
+              setForm({...form, longitude: position.coords.longitude, latitude: position.coords.latitude})
             },
             (error) => {
               console.log(error);
