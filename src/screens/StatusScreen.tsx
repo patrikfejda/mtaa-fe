@@ -1,4 +1,4 @@
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button } from 'native-base';
 import React from 'react';
 import type { TabScreenProps } from '../types/navigation';
 import Geolocation from '@react-native-community/geolocation';
@@ -17,8 +17,8 @@ export default function StatusScreen({}: TabScreenProps<'Status'>) {
 
   return (
     <View>
-      <Text>TODO 123</Text>
-      <Button title="Get Location" onPress={getLocation} />
+      <Text fontSize="md">Ahoj, ako sa mas?</Text>
+      <Button onPress={getLocation}>GET LOCATION</Button>
     </View>
   );
 }
