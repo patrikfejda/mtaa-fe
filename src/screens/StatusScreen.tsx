@@ -5,8 +5,17 @@ import Geolocation from 'react-native-geolocation-service';
 import { check, PERMISSIONS, request, RESULTS, openSettings } from 'react-native-permissions';
 
 
+
+
 export default function StatusScreen() {
   const [location, setLocation] = useState(null);
+
+  const sendStatus = async () => {
+    setLocation(null);
+    console.log("sendStatus");
+    await getLocation();
+    console.log("location", location);
+  }
 
   const getLocation = async () => {
     try {
@@ -24,7 +33,7 @@ export default function StatusScreen() {
       } else if (permissionStatus === RESULTS.DENIED) {
         const permissionRequest = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
         if (permissionRequest === RESULTS.GRANTED) {
-          Geolocation.getCurrentPosition(
+          await Geolocation.getCurrentPosition(
             (position) => {
               setLocation(position);
             },
@@ -57,8 +66,8 @@ export default function StatusScreen() {
   return (
     <View>
       <Text>Location: {location ? `${location.coords.latitude}, ${location.coords.longitude}` : 'unknown'}</Text>
-      <Button onPress={getLocation}>
-        <Text>Get Location</Text>
+      <Button onPress={sendStatus}>
+        <Text>SEND STATUS</Text>
       </Button>
     </View>
   );
