@@ -22,13 +22,13 @@ export default function SettingsScreen({
   navigation,
 }: TabScreenProps<'Settings'>) {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const [form, setForm] = useState({
-    displayname: '',
-    profilePhoto: null,
-  });
-  const [login, {isLoading}] = useChangeUserMutation();
+  const [changeUser, {isLoading}] = useChangeUserMutation();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
+  const [form, setForm] = useState({
+    displayname: user.displayName,
+    profilePhoto: null,
+  });
 
   const handleLogout = () => {
     dispatch(logout());
@@ -49,7 +49,11 @@ export default function SettingsScreen({
           console.log('ImagePicker Error: ', response.error);
         } else {
           // You can now update the user's profile photo URL in the state
-          console.log('selected image', response);
+          // console.log('selected image', response);
+          console.log(form);
+          setForm({...form, profilePhoto: response.uri})
+          console.log(form);
+          changeUser(form);
         }
       },
     );
@@ -83,18 +87,22 @@ export default function SettingsScreen({
             <Icon as={MaterialIcons} name="edit" size="sm" color="white" />
           </Button>
           <Text fontSize="2xl" fontWeight="bold">
-            {user.displayName}
+            {form.displayName}
           </Text>
         </Box>
         <VStack space="5">
           <FormControl>
             <FormControl.Label>Display Name</FormControl.Label>
             <Input
-              onChangeText={value => setForm({...form, username: value})}
-              type="text"
-              defaultValue={user.displayName}
-              variant="filled"
-            />
+              onChangeText={value => {
+                const updatedForm = {...form, displayName: value};
+                setForm(updatedForm);
+                changeUser(updatedForm);
+              }}
+  type="text"
+  defaultValue={user.displayName}
+  variant="filled"
+/>
           </FormControl>
         </VStack>
         <VStack alignItems="center">

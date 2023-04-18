@@ -13,7 +13,7 @@ export interface LoginRequest {
 
 export interface UserChangeRequest {
   displayName: string;
-  profilePhoto: string;
+  profilePhoto: File;
 }
 
 export interface RegisterRequest {

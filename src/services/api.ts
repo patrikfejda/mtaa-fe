@@ -22,7 +22,21 @@ export const api = createApi({
       query: request => ({url: 'auth/register', method: 'POST', body: request}),
     }),
     changeUser: builder.mutation<AuthResponse, UserChangeRequest>({
-      query: request => ({url: 'users/me', method: 'PUT', body: request}),
+      query: (request) => {
+        const formData = new FormData();
+        formData.append('displayName', request.displayName);
+        if (request.profilePhoto) {
+          formData.append('profilePhoto', request.profilePhoto);
+        }
+        return {
+          url: 'users/me',
+          method: 'PUT',
+          body: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        };
+      },
     }),
   }),
 });
