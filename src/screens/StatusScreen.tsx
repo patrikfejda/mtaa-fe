@@ -3,18 +3,24 @@ import { View, Text, Button } from 'native-base';
 import { Alert } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { check, PERMISSIONS, request, RESULTS, openSettings } from 'react-native-permissions';
-
-
+import {useStatusMutation} from '../services/api';
 
 
 export default function StatusScreen() {
-  const [location, setLocation] = useState(null);
+  const [createStatus, {isLoading}] = useStatusMutation();
+
+  const [form, setForm] = useState({
+    longtitude: "0",
+    latitude: "0",
+    text: 'AHOJKY',
+  });
+
 
   const sendStatus = async () => {
-    setLocation(null);
     console.log("sendStatus");
     await getLocation();
-    console.log("location", location);
+    console.log(form);
+    createStatus(form);
   }
 
   const getLocation = async () => {
@@ -23,7 +29,7 @@ export default function StatusScreen() {
       if (permissionStatus === RESULTS.GRANTED) {
         Geolocation.getCurrentPosition(
           (position) => {
-            setLocation(position);
+            setForm({...form, longtitude: position.coords.longitude.toString(), latitude: position.coords.latitude.toString()});
           },
           (error) => {
             console.log(error);
@@ -35,7 +41,7 @@ export default function StatusScreen() {
         if (permissionRequest === RESULTS.GRANTED) {
           await Geolocation.getCurrentPosition(
             (position) => {
-              setLocation(position);
+              setForm({...form, longtitude: position.coords.longitude, latitude: position.coords.latitude})
             },
             (error) => {
               console.log(error);
@@ -65,7 +71,6 @@ export default function StatusScreen() {
 
   return (
     <View>
-      <Text>Location: {location ? `${location.coords.latitude}, ${location.coords.longitude}` : 'unknown'}</Text>
       <Button onPress={sendStatus}>
         <Text>SEND STATUS</Text>
       </Button>

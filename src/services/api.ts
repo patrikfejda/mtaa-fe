@@ -21,6 +21,9 @@ export const api = createApi({
     register: builder.mutation<AuthResponse, RegisterRequest>({
       query: request => ({url: 'auth/register', method: 'POST', body: request}),
     }),
+    status: builder.mutation<AuthResponse, StatusRequest>({
+      query: request => ({url: 'statuses', method: 'POST', body: request}),
+    }),
     changeUser: builder.mutation<AuthResponse, UserChangeRequest>({
       query: (request) => {
         const formData = new FormData();
@@ -41,4 +44,4 @@ export const api = createApi({
   }),
 });
 
-export const {useLoginMutation, useRegisterMutation, useChangeUserMutation} = api;
+export const {useLoginMutation, useRegisterMutation, useStatusMutation,  useChangeUserMutation} = api;
