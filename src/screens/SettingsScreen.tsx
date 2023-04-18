@@ -43,19 +43,24 @@ export default function SettingsScreen({
 
       <VStack px="2" space="9">
         <Box alignItems="center" position="relative">
+          {/* uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s', */}
           <Image
-            source={{
-              uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
-            }}
+            source={
+              user.profilePhotoUrl
+                ? { uri: user.profilePhotoUrl }
+                : {
+                    uri: `https://ui-avatars.com/api/?name=${user.displayName}&background=random&size=200`,
+                  }
+            }
             borderRadius={100}
-            alt="Alternate Text"
+            alt="Profile photo"
             size="xl"
           />
+
           <Button
             position="absolute"
             bottom={+10}
             right={+100}
-            bg="blue.500"
             size="sm"
             onPress={handleImageChange}>
             <Icon as={MaterialIcons} name="edit" size="sm" color="white" />
