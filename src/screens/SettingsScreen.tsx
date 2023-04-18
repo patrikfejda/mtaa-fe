@@ -49,24 +49,16 @@ export default function SettingsScreen({
         } else if (response.error) {
           console.log('ImagePicker Error: ', response.error);
         } else {
-          // Create a file object from the selected image
-          console.log(response)
           const fileUri = response.assets[0].uri;
           const fileName = response.assets[0].fileName;
           const fileType = response.assets[0].type;
-          console.log(fileUri)
-          console.log(fileType)
-
           const file = {
             uri: fileUri,
             name: fileName,
             type: fileType,
           };
-
-          // Update the form state with the new file object
           setForm({...form, profilePhoto: file});
 
-          // Call the changeUser mutation with the updated form data
           changeUser({...form, profilePhoto: file});
         }
       },
