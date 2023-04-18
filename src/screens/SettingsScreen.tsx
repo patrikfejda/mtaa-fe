@@ -27,6 +27,8 @@ export default function SettingsScreen({
   });
   const [login, {isLoading}] = useLoginMutation();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.auth.user);
+
 
   const handleLogout = () => {
     dispatch(logout());
@@ -47,7 +49,7 @@ export default function SettingsScreen({
             size="xl"
           />
           <Text fontSize="2xl" fontWeight="bold">
-            Patrik Fejda
+            {user.displayName}
           </Text>
         </Box>
         <VStack space="5">
