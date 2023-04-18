@@ -26,7 +26,7 @@ export default function SettingsScreen({
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
   const [form, setForm] = useState({
-    displayname: user.displayName,
+    displayName: user.displayName,
     profilePhoto: null,
   });
 
@@ -49,10 +49,8 @@ export default function SettingsScreen({
           console.log('ImagePicker Error: ', response.error);
         } else {
           // You can now update the user's profile photo URL in the state
-          // console.log('selected image', response);
-          console.log(form);
-          setForm({...form, profilePhoto: response.uri})
-          console.log(form);
+          console.log('selected image', response);
+          setForm({...form, profilePhoto: response})
           changeUser(form);
         }
       },
