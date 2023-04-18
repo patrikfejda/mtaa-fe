@@ -1,3 +1,4 @@
+import { launchImageLibrary } from "react-native-image-picker";
 import {
   Box,
   Button,
@@ -34,11 +35,47 @@ export default function SettingsScreen({
   };
 
   const handleImageChange = () => {
-    // Logic to change user image
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: false,
+        maxHeight: 200,
+        maxWidth: 200,
+      },
+      response => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
+          // You can now update the user's profile photo URL in the state
+          console.log('selected image', response);
+        }
+      },
+    );
   };
+
 
   return (
     <View>
+      < Button onPress = {
+        () =>
+        ImagePicker.launchImageLibrary({
+            mediaType: 'photo',
+            includeBase64: false,
+            maxHeight: 200,
+            maxWidth: 200,
+          },
+          (response) => {
+            console.log(response);
+            this.setState({
+              resourcePath: response
+            });
+          },
+        )
+      }
+      title = "Select Image" / >
+
       <Text>This page is under construction</Text>
 
       <VStack px="2" space="9">
