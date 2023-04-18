@@ -39,8 +39,6 @@ export default function SettingsScreen({
 
   return (
     <View>
-      <Text>This page is under construction</Text>
-
       <VStack px="2" space="9">
         <Box alignItems="center">
           <Image
