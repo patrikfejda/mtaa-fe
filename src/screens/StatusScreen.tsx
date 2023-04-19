@@ -21,6 +21,10 @@ export default function StatusScreen() {
     await getLocation();
     console.log(form);
     createStatus(form);
+
+    // geo
+
+    console.log("https://www.google.com/maps/search/?api=1&query=" + form.latitude + "," + form.longitude);
   }
 
   const getLocation = async () => {
