@@ -15,6 +15,21 @@ export default function StatusScreen() {
     text: 'AHOJKY',
   });
 
+  const formatGPS = (dd, direction) => {
+    const absDD = Math.abs(dd);
+    const deg = Math.floor(absDD);
+    const min = Math.floor((absDD - deg) * 60);
+    const sec = Math.round((absDD - deg - min / 60) * 3600 * 1000) / 1000;
+    let dir = "";
+    if (direction == "lat") {
+      dir = dd < 0 ? "S" : "N";
+    }
+    else if (direction == "lon") {
+      dir = dd < 0 ? "W" : "E";
+    }
+    return `${deg}°${min}'${sec}"${dir}`;
+  }
+
 
   const sendStatus = async () => {
     console.log("sendStatus");
@@ -22,9 +37,8 @@ export default function StatusScreen() {
     console.log(form);
     createStatus(form);
 
-    // geo
-
     console.log("https://www.google.com/maps/search/?api=1&query=" + form.latitude + "," + form.longitude);
+    console.log(formatGPS(form.latitude, "lat") + ", " + formatGPS(form.longitude, "lon"))
   }
 
   const getLocation = async () => {
