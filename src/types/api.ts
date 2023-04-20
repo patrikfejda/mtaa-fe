@@ -6,6 +6,16 @@ export interface User {
   profilePhotoUrl?: string;
 }
 
+interface StatusResponse {
+  id: number;
+  latitude: string;
+  longitude: string;
+  text: string;
+  created_at: string;
+  author: User;
+}
+
+
 export interface LoginRequest {
   username: string;
   password: string;
