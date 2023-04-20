@@ -10,10 +10,7 @@ import {
   Icon,
   IconButton,
   Input,
-  Text,
-  View,
 } from 'native-base';
-import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AppAvatarItem from '../components/AppAvatarItem';
 import type {TabScreenProps} from '../types/navigation';
@@ -25,7 +22,7 @@ export default function StatusScreen() {
   const [form, setForm] = useState({
     longitude: "0",
     latitude: "0",
-    text: 'AHOJKY',
+    text: 'No status is set!',
   });
 
   const formatGPS = (dd, direction) => {
@@ -126,10 +123,12 @@ export default function StatusScreen() {
             placeholder="Type your feeling here"
             size="md"
             variant="filled"
+            onChangeText={value => setForm({...form, text: value})}
           />
         </FormControl>
         <IconButton
           icon={<Icon as={MaterialIcons} color="text.50" name="send" />}
+          onPress={sendStatus}
           borderLeftRadius="none"
           variant="solid"
         />
@@ -153,9 +152,9 @@ export default function StatusScreen() {
         titleGrayedOut="Me"
         subtitle="Good!"
       />
-    <Button onPress={sendStatus}>
+    {/* <Button onPress={sendStatus}>
         <Text>SEND STATUS</Text>
-    </Button>
+    </Button> */}
     </View>
   );
 }
