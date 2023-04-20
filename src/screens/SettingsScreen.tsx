@@ -80,7 +80,7 @@ export default function SettingsScreen({
               username: user.username,
               email: user.email,
               displayName: user.displayName,
-              profilePhotoUrl: user.profilePhotoUrl ? "http://localhost:8000"+user.profilePhotoUrl : undefined,
+              profilePhotoUrl: user.profilePhotoUrl ? ""+user.profilePhotoUrl : undefined,
             }}
           />
 

@@ -178,7 +178,7 @@ export default function StatusScreen() {
             username: status.author.username,
             email: status.author.email,
             displayName: status.author.displayName,
-            profilePhotoUrl: status.author.profilePhotoUrl ? "http://localhost:8000"+status.author.profilePhotoUrl : undefined,
+            profilePhotoUrl: status.author.profilePhotoUrl ? ""+status.author.profilePhotoUrl : undefined,
           }}
           date={status.created_at}
           title={status.author.displayName}

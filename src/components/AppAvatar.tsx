@@ -11,7 +11,7 @@ export default function AppAvatar({
   return (
     <Avatar
       size={size === 'md' ? '42px' : size}
-      source={{uri: user.profilePhotoUrl}}
+      source={{uri: "http://localhost:8000"+user.profilePhotoUrl}}
       bg="primary.600">
       {customFallback ?? getUserInitials(user)}
     </Avatar>
