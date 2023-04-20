@@ -3,7 +3,7 @@ import { View, Text, Button, Box, Link, TextArea } from 'native-base';
 import { Alert, ScrollView } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { check, PERMISSIONS, request, RESULTS, openSettings } from 'react-native-permissions';
-import {useStatusMutation, useGetStatusesQuery} from '../services/api';
+import {useStatusMutation, useDeleteStatusMutation, useGetStatusesQuery} from '../services/api';
 import {
   FormControl,
   HStack,
@@ -22,6 +22,7 @@ import {trimText} from '../utils/text';
 
 export default function StatusScreen() {
   const [createStatus, {isLoadingSendingStatus}] = useStatusMutation();
+  const [deleteStatus, {isLoadingDeleteingStatus}] = useDeleteStatusMutation();
   const user = useAppSelector(state => state.auth.user);
 
   const [form, setForm] = useState({
@@ -161,7 +162,9 @@ export default function StatusScreen() {
           </Link>
         </Button>
         {isMyStatusCondition && (
-          <Button marginBottom="2" backgroundColor="red.700">Delete status</Button>
+          <Button marginBottom="2" backgroundColor="red.700"
+          onPress={() => deleteStatus({ "id": status.id })} disabled={isLoadingDeleteingStatus}
+          >Delete status</Button>
         )}
       </Box>
     )
