@@ -27,9 +27,9 @@ export default function StatusScreen() {
     text: '',
   });
 
-  const { statuses, error, isLoading } = useGetStatusesQuery();
+  const { data, error, isLoading } = useGetStatusesQuery();
   console.log("FETCHED THIS FROM /STATUSES")
-  console.log(statuses);
+  console.log(data);
 
 
   const formatGPS = (dd, direction) => {
@@ -160,7 +160,7 @@ export default function StatusScreen() {
         titleGrayedOut="Me"
         subtitle="Good!"
       />
-      {statuses?.map((status) => (
+      {data?.map((status) => (
         <AppAvatarItem
         key={status.id}
         user={{
