@@ -105,6 +105,7 @@ export default function StatusScreen() {
     console.log("https://www.google.com/maps/search/?api=1&query=" + form.latitude + "," + form.longitude);
     console.log(formatGPS(form.latitude, "lat") + ", " + formatGPS(form.longitude, "lon"))
     setForm({...form, text: ''});
+    refetch();
   }
 
   const getLocation = async () => {
