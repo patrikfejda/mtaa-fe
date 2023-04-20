@@ -11,6 +11,12 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface StatusRequest {
+  latitude: string
+  longitude: string
+  text: string
+}
+
 export interface UserChangeRequest {
   displayName: string;
   profilePhoto: File;
