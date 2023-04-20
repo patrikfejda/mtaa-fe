@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Box } from 'native-base';
+import { View, Text, Button, Box, Link, TextArea } from 'native-base';
 import { Alert, ScrollView } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { check, PERMISSIONS, request, RESULTS, openSettings } from 'react-native-permissions';
@@ -16,7 +16,9 @@ import AppAvatarItem from '../components/AppAvatarItem';
 import type {TabScreenProps} from '../types/navigation';
 import {useAppSelector, useAppDispatch} from '../store/hooks';
 import { useFocusEffect } from '@react-navigation/native';
+import AppPopup from '../components/AppPopup';
 
+import {trimText} from '../utils/text';
 
 export default function StatusScreen() {
   const [createStatus, {isLoadingSendingStatus}] = useStatusMutation();
@@ -127,6 +129,49 @@ export default function StatusScreen() {
     getLocation();
   }, []);
 
+  views = [];
+  data?.map((status) => {
+    console.log({status});
+    const closedView = (
+      <AppAvatarItem
+            isHighlighted={true}
+            user={status.author}
+            date={status.created_at}
+            title={status.author.displayName}
+            titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
+            subtitle={status.text}
+            />
+    );
+    console.log(status.author.displayName);
+    googleMapsLink = "https://www.google.com/maps/search/?api=1&query=" + status.latitude + "," + status.longitude;
+    isMyStatusCondition = status.author.id === user.id;
+    const openView = (
+      <Box marginLeft="2" marginRight="2">
+        <AppAvatarItem
+              isHighlighted={true}
+              user={status.author}
+              date={status.created_at}
+              title={trimText(status.author.displayName, 30)}
+              titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
+        />
+        <Text multiline={true} marginBottom="2">{status.text}</Text>
+        <Button variant="outline" marginBottom="2">
+          <Link href={googleMapsLink}>
+            {formatGPS(status.latitude, "lat") + ", " + formatGPS(status.longitude, "lon")}
+          </Link>
+        </Button>
+        {isMyStatusCondition && (
+          <Button marginBottom="2" backgroundColor="red.700">Delete status</Button>
+        )}
+      </Box>
+    )
+    views.push({
+      'closed': closedView,
+      'open': openView,
+      'key': status.id,
+      'title': trimText("Status of " + status.author.displayName, 30),
+    })
+  })
 
   return (
     <ScrollView>
@@ -170,16 +215,17 @@ export default function StatusScreen() {
           titleGrayedOut="Me"
           subtitle="Good!"
         /> */}
-        {data?.map((status) => (
+        {views?.map((view) => (
           <Box marginBottom="2">
-            <AppAvatarItem
+            {/* <AppAvatarItem
             isHighlighted={true}
             user={user}
             date={status.created_at}
             title={status.author.displayName}
             titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
             subtitle={status.text}
-            />
+            /> */}
+          <AppPopup viewOpen={view['open']} viewClosed={view['closed']} title={view['title']} ></AppPopup>
           </Box>
         ))}
       </View>
