@@ -42,6 +42,7 @@ export default function StatusScreen() {
   }
 
   const getLocation = async () => {
+    console.log("gettting location");
     try {
       const permissionStatus = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
       if (permissionStatus === RESULTS.GRANTED) {
