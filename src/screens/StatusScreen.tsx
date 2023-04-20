@@ -15,6 +15,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AppAvatarItem from '../components/AppAvatarItem';
 import type {TabScreenProps} from '../types/navigation';
 import {useAppSelector, useAppDispatch} from '../store/hooks';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export default function StatusScreen() {
@@ -27,7 +28,15 @@ export default function StatusScreen() {
     text: '',
   });
 
-  const { data, error, isLoading } = useGetStatusesQuery();
+  const { data, error, isLoading, refetch } = useGetStatusesQuery();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Fetch statuses every time the screen comes into focus
+      refetch();
+    }, [])
+  );
+
   console.log("FETCHED THIS FROM /STATUSES")
   console.log(data);
 
