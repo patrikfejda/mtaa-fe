@@ -72,7 +72,6 @@ export default function SettingsScreen({
 
   return (
     <View>
-      <AppPopup></AppPopup>
       <VStack px="2" space="9">
         <Box alignItems="center" position="relative">
           <AppAvatar
@@ -116,6 +115,7 @@ export default function SettingsScreen({
           </Button>
         </VStack>
       </VStack>
+      <AppPopup></AppPopup>
     </View>
   );
 }
