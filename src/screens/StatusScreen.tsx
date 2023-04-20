@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button } from 'native-base';
-import { Alert } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { check, PERMISSIONS, request, RESULTS, openSettings } from 'react-native-permissions';
 import {useStatusMutation, useGetStatusesQuery} from '../services/api';
@@ -129,62 +129,64 @@ export default function StatusScreen() {
 
 
   return (
-    <View px="2">
-      <HStack alignItems="flex-end">
-        <FormControl flex="1">
-          <FormControl.Label>How are you feeling?</FormControl.Label>
-          <Input
-            // borderRightRadius is not working due to a NativeBase bug
-            borderTopRightRadius="none"
-            borderBottomRightRadius="none"
-            placeholder="Type your feeling here"
-            size="md"
-            variant="filled"
-            onChangeText={value => setForm({...form, text: value})}
-            value={form.text}
+    <ScrollView>
+      <View px="2">
+        <HStack alignItems="flex-end">
+          <FormControl flex="1">
+            <FormControl.Label>How are you feeling?</FormControl.Label>
+            <Input
+              // borderRightRadius is not working due to a NativeBase bug
+              borderTopRightRadius="none"
+              borderBottomRightRadius="none"
+              placeholder="Type your feeling here"
+              size="md"
+              variant="filled"
+              onChangeText={value => setForm({...form, text: value})}
+              value={form.text}
+            />
+          </FormControl>
+          <IconButton
+            icon={<Icon as={MaterialIcons} color="text.50" name="send" />}
+            onPress={sendStatus}
+            borderLeftRadius="none"
+            variant="solid"
           />
-        </FormControl>
-        <IconButton
-          icon={<Icon as={MaterialIcons} color="text.50" name="send" />}
-          onPress={sendStatus}
-          borderLeftRadius="none"
-          variant="solid"
-        />
-      </HStack>
+        </HStack>
 
-      <Text color="text.400" fontWeight="medium" pt="6" pb="1">
-        Status wall
-      </Text>
-      {/* Example use */}
-      <AppAvatarItem
-        isHighlighted={true}
-        user={{
-          id: 1,
-          username: 'username000',
-          email: 'whatever',
-          displayName: 'John Doe',
-        }}
-        date="2023-04-19T20:20:30.400+02:30"
-        title="John Doe"
-        titleGrayedOut="Me"
-        subtitle="Good!"
-      />
-      {data?.map((status) => (
+        <Text color="text.400" fontWeight="medium" pt="6" pb="1">
+          Status wall
+        </Text>
+        {/* Example use */}
         <AppAvatarItem
-        key={status.id}
-        user={{
-          id: 1,
-          username: status.author.username,
-          email: status.author.email,
-          displayName: status.author.displayName,
-          profilePhotoUrl: "http://localhost:8000"+status.author.profilePhotoUrl,
-        }}
-        date={status.created_at}
-        title={status.author.displayName}
-        titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
-        subtitle={status.text}
+          isHighlighted={true}
+          user={{
+            id: 1,
+            username: 'username000',
+            email: 'whatever',
+            displayName: 'John Doe',
+          }}
+          date="2023-04-19T20:20:30.400+02:30"
+          title="John Doe"
+          titleGrayedOut="Me"
+          subtitle="Good!"
         />
-      ))}
-    </View>
+        {data?.map((status) => (
+          <AppAvatarItem
+          key={status.id}
+          user={{
+            id: 1,
+            username: status.author.username,
+            email: status.author.email,
+            displayName: status.author.displayName,
+            profilePhotoUrl: "http://localhost:8000"+status.author.profilePhotoUrl,
+          }}
+          date={status.created_at}
+          title={status.author.displayName}
+          titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
+          subtitle={status.text}
+          />
+        ))}
+      </View>
+    </ScrollView>
   );
 }
