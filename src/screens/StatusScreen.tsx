@@ -18,6 +18,7 @@ import {useAppSelector, useAppDispatch} from '../store/hooks';
 import { useFocusEffect } from '@react-navigation/native';
 import AppPopup from '../components/AppPopup';
 
+import {trimText} from '../utils/text';
 
 export default function StatusScreen() {
   const [createStatus, {isLoadingSendingStatus}] = useStatusMutation();
@@ -146,12 +147,11 @@ export default function StatusScreen() {
     isMyStatusCondition = status.author.id === user.id;
     const openView = (
       <Box marginLeft="2" marginRight="2">
-        <Text>Status of {status.author.displayName}</Text>
         <AppAvatarItem
               isHighlighted={true}
               user={status.author}
               date={status.created_at}
-              title={status.author.displayName}
+              title={trimText(status.author.displayName, 30)}
               titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
         />
         <Text multiline={true} marginBottom="2">{status.text}</Text>
@@ -169,6 +169,7 @@ export default function StatusScreen() {
       'closed': closedView,
       'open': openView,
       'key': status.id,
+      'title': trimText("Status of " + status.author.displayName, 30),
     })
   })
 
@@ -224,7 +225,7 @@ export default function StatusScreen() {
             titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
             subtitle={status.text}
             /> */}
-          <AppPopup viewOpen={view['open']} viewClosed={view['closed']} ></AppPopup>
+          <AppPopup viewOpen={view['open']} viewClosed={view['closed']} title={view['title']} ></AppPopup>
           </Box>
         ))}
       </View>

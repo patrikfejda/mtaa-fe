@@ -19,6 +19,7 @@ import {selectIsLoggedIn, logout} from '../store/authSlice';
 import {useAppSelector, useAppDispatch} from '../store/hooks';
 import type {TabScreenProps} from '../types/navigation';
 import AppAvatar from '../components/AppAvatar';
+import {trimText} from '../utils/text';
 
 
 export default function SettingsScreen({
@@ -86,7 +87,7 @@ export default function SettingsScreen({
             <Icon as={MaterialIcons} name="edit" size="sm" color="white" />
           </Button>
           <Text fontSize="2xl" fontWeight="bold">
-            {form.displayName}
+            {trimText(form.displayName, 25)}
           </Text>
         </Box>
         <VStack space="5">
