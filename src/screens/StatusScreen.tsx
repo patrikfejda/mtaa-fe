@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button } from 'native-base';
 import { Alert } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
@@ -87,6 +87,11 @@ export default function StatusScreen() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
 
   return (
     <View>
