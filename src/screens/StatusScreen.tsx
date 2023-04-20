@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'native-base';
+import { View, Text, Button, Box } from 'native-base';
 import { Alert, ScrollView } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { check, PERMISSIONS, request, RESULTS, openSettings } from 'react-native-permissions';
@@ -157,7 +157,7 @@ export default function StatusScreen() {
           Status wall
         </Text>
         {/* Example use */}
-        <AppAvatarItem
+        {/* <AppAvatarItem
           isHighlighted={true}
           user={{
             id: 1,
@@ -169,16 +169,18 @@ export default function StatusScreen() {
           title="John Doe"
           titleGrayedOut="Me"
           subtitle="Good!"
-        />
+        /> */}
         {data?.map((status) => (
-          <AppAvatarItem
-          isHighlighted={true}
-          user={user}
-          date={status.created_at}
-          title={status.author.displayName}
-          titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
-          subtitle={status.text}
-          />
+          <Box marginBottom="2">
+            <AppAvatarItem
+            isHighlighted={true}
+            user={user}
+            date={status.created_at}
+            title={status.author.displayName}
+            titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
+            subtitle={status.text}
+            />
+          </Box>
         ))}
       </View>
     </ScrollView>
