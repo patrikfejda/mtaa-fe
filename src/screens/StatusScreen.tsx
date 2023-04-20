@@ -84,6 +84,7 @@ export default function StatusScreen() {
 
     console.log("https://www.google.com/maps/search/?api=1&query=" + form.latitude + "," + form.longitude);
     console.log(formatGPS(form.latitude, "lat") + ", " + formatGPS(form.longitude, "lon"))
+    setForm({...form, text: ''});
   }
 
   const getLocation = async () => {
@@ -124,6 +125,7 @@ export default function StatusScreen() {
             size="md"
             variant="filled"
             onChangeText={value => setForm({...form, text: value})}
+            value={form.text}
           />
         </FormControl>
         <IconButton
