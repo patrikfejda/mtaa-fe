@@ -16,6 +16,7 @@ import AppAvatarItem from '../components/AppAvatarItem';
 import type {TabScreenProps} from '../types/navigation';
 import {useAppSelector, useAppDispatch} from '../store/hooks';
 import { useFocusEffect } from '@react-navigation/native';
+import AppPopup from '../components/AppPopup';
 
 
 export default function StatusScreen() {
@@ -127,6 +128,34 @@ export default function StatusScreen() {
     getLocation();
   }, []);
 
+  views = [];
+  data?.map((status) => {
+    console.log({status});
+    const closedView = (
+      <AppAvatarItem
+            isHighlighted={true}
+            user={user}
+            date={status.created_at}
+            title={status.author.displayName}
+            titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
+            subtitle={status.text}
+            />
+    );
+    const openView = (
+      <AppAvatarItem
+            isHighlighted={true}
+            user={user}
+            date={status.created_at}
+            title={status.author.displayName}
+            titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
+            subtitle={status.text}
+            />
+    )
+    views.push({
+      'closed': closedView,
+      'open': openView,
+    })
+  })
 
   return (
     <ScrollView>
@@ -170,16 +199,17 @@ export default function StatusScreen() {
           titleGrayedOut="Me"
           subtitle="Good!"
         /> */}
-        {data?.map((status) => (
+        {views?.map((view) => (
           <Box marginBottom="2">
-            <AppAvatarItem
+            {/* <AppAvatarItem
             isHighlighted={true}
             user={user}
             date={status.created_at}
             title={status.author.displayName}
             titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
             subtitle={status.text}
-            />
+            /> */}
+          <AppPopup viewOpen={view['closed']} viewClosed={view['open']} ></AppPopup>
           </Box>
         ))}
       </View>

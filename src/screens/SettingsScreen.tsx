@@ -19,7 +19,6 @@ import {selectIsLoggedIn, logout} from '../store/authSlice';
 import {useAppSelector, useAppDispatch} from '../store/hooks';
 import type {TabScreenProps} from '../types/navigation';
 import AppAvatar from '../components/AppAvatar';
-import AppPopup from '../components/AppPopup';
 
 
 export default function SettingsScreen({
@@ -68,14 +67,6 @@ export default function SettingsScreen({
     );
   };
 
-  const myView = (
-    <View>
-      <Text>This is my custom view!</Text>
-    </View>
-  );
-
-
-
 
   return (
     <View>
@@ -122,7 +113,6 @@ export default function SettingsScreen({
           </Button>
         </VStack>
       </VStack>
-      <AppPopup view={myView} />
     </View>
   );
 }
