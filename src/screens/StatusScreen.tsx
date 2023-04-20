@@ -3,7 +3,7 @@ import { View, Text, Button } from 'native-base';
 import { Alert } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { check, PERMISSIONS, request, RESULTS, openSettings } from 'react-native-permissions';
-import {useStatusMutation} from '../services/api';
+import {useStatusMutation, useGetStatusesQuery} from '../services/api';
 import {
   FormControl,
   HStack,
@@ -14,16 +14,20 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AppAvatarItem from '../components/AppAvatarItem';
 import type {TabScreenProps} from '../types/navigation';
+import {useAppSelector, useAppDispatch} from '../store/hooks';
 
 
 export default function StatusScreen() {
-  const [createStatus, {isLoading}] = useStatusMutation();
+  const [createStatus, {isLoadingSendingStatus}] = useStatusMutation();
+  const user = useAppSelector(state => state.auth.user);
 
   const [form, setForm] = useState({
     longitude: "0",
     latitude: "0",
     text: 'No status is set!',
   });
+
+  const { statuses, error, isLoading } = useGetStatusesQuery();
 
   const formatGPS = (dd, direction) => {
     const absDD = Math.abs(dd);
@@ -139,7 +143,10 @@ export default function StatusScreen() {
       <Text color="text.400" fontWeight="medium" pt="6" pb="1">
         Status wall
       </Text>
-
+      <Text>{user.id}</Text>
+      {statuses?.map((status) => (
+        <Text>X</Text>
+      ))}
       {/* Example use */}
       <AppAvatarItem
         isHighlighted={true}
@@ -154,6 +161,22 @@ export default function StatusScreen() {
         titleGrayedOut="Me"
         subtitle="Good!"
       />
+      {statuses?.map((status) => (
+        <AppAvatarItem
+        key={status.id}
+        user={{
+          id: 1,
+          username: status.author.username,
+          email: status.author.email,
+          displayName: status.author.displayName,
+          profilePhotoUrl: "http://localhost:8000"+status.author.profilePhotoUrl,
+        }}
+        date={status.created_at}
+        title={status.author.displayName}
+        titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
+        subtitle={status.text}
+        />
+      ))}
     </View>
   );
 }
