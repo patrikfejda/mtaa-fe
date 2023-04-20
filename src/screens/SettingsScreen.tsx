@@ -68,6 +68,13 @@ export default function SettingsScreen({
     );
   };
 
+  const myView = (
+    <View>
+      <Text>This is my custom view!</Text>
+    </View>
+  );
+
+
 
 
   return (
@@ -115,7 +122,7 @@ export default function SettingsScreen({
           </Button>
         </VStack>
       </VStack>
-      <AppPopup text={"dsadsa"}></AppPopup>
+      <AppPopup view={myView} />
     </View>
   );
 }
