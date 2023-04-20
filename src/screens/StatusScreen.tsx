@@ -143,6 +143,7 @@ export default function StatusScreen() {
     );
     console.log(status.author.displayName);
     googleMapsLink = "https://www.google.com/maps/search/?api=1&query=" + status.latitude + "," + status.longitude;
+    isMyStatusCondition = status.author.id === user.id;
     const openView = (
       <Box marginLeft="2" marginRight="2">
         <Text>Status of {status.author.displayName}</Text>
@@ -159,7 +160,9 @@ export default function StatusScreen() {
             {formatGPS(status.latitude, "lat") + ", " + formatGPS(status.longitude, "lon")}
           </Link>
         </Button>
-        <Button marginBottom="2" backgroundColor="red.700">Delete status</Button>
+        {isMyStatusCondition && (
+          <Button marginBottom="2" backgroundColor="red.700">Delete status</Button>
+        )}
       </Box>
     )
     views.push({
