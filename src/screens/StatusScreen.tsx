@@ -154,9 +154,6 @@ export default function StatusScreen() {
         titleGrayedOut="Me"
         subtitle="Good!"
       />
-    {/* <Button onPress={sendStatus}>
-        <Text>SEND STATUS</Text>
-    </Button> */}
     </View>
   );
 }
