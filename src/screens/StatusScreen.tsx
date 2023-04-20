@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Box } from 'native-base';
+import { View, Text, Button, Box, Link, TextArea } from 'native-base';
 import { Alert, ScrollView } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { check, PERMISSIONS, request, RESULTS, openSettings } from 'react-native-permissions';
@@ -134,22 +134,33 @@ export default function StatusScreen() {
     const closedView = (
       <AppAvatarItem
             isHighlighted={true}
-            user={user}
+            user={status.author}
             date={status.created_at}
             title={status.author.displayName}
             titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
             subtitle={status.text}
             />
     );
+    console.log(status.author.displayName);
+    googleMapsLink = "https://www.google.com/maps/search/?api=1&query=" + status.latitude + "," + status.longitude;
     const openView = (
-      <AppAvatarItem
-            isHighlighted={true}
-            user={user}
-            date={status.created_at}
-            title={status.author.displayName}
-            titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
-            subtitle={status.text}
-            />
+      <Box>
+        <Text>Status of {status.author.displayName}</Text>
+        <AppAvatarItem
+              isHighlighted={true}
+              user={status.author}
+              date={status.created_at}
+              title={status.author.displayName}
+              titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
+        />
+        <TextArea>{status.text}</TextArea>
+        <Button variant="outline">
+          <Link href={googleMapsLink}>
+            {formatGPS(status.latitude, "lat") + ", " + formatGPS(status.longitude, "lon")}
+          </Link>
+        </Button>
+        <Button>Delete status</Button>
+      </Box>
     )
     views.push({
       'closed': closedView,
@@ -209,7 +220,7 @@ export default function StatusScreen() {
             titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
             subtitle={status.text}
             /> */}
-          <AppPopup viewOpen={view['closed']} viewClosed={view['open']} ></AppPopup>
+          <AppPopup viewOpen={view['open']} viewClosed={view['closed']} ></AppPopup>
           </Box>
         ))}
       </View>
