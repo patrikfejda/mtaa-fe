@@ -1,9 +1,11 @@
 import {getUserInitials} from '../utils/initials';
 import React, {useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import {Alert, Modal, Button, Text, Pressable, View} from 'react-native';
 
 
-export default function AppPopup({}) {
+export default function AppPopup({
+    text="Hello World",
+}) {
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <View>
@@ -16,17 +18,17 @@ export default function AppPopup({}) {
                 }}>
                 <View>
                 <View>
-                    <Text>Hello World!</Text>
+                    <Text>{text}</Text>
                     <Pressable
                     onPress={() => setModalVisible(!modalVisible)}>
-                    <Text>Hide Modal</Text>
+                    <Text>HIDE</Text>
                     </Pressable>
                 </View>
                 </View>
             </Modal>
             <Pressable
                 onPress={() => setModalVisible(true)}>
-                <Text>Show Modal</Text>
+                <Text>SHOW</Text>
             </Pressable>
         </View>
     );

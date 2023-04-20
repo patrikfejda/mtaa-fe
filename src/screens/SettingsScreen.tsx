@@ -115,7 +115,7 @@ export default function SettingsScreen({
           </Button>
         </VStack>
       </VStack>
-      <AppPopup></AppPopup>
+      <AppPopup text={"dsadsa"}></AppPopup>
     </View>
   );
 }
