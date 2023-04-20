@@ -3,7 +3,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Alert, Modal, Pressable, Text, View } from 'react-native';
 import { Box } from 'native-base';
 
-export default function AppPopup({ viewOpen, viewClosed, showButtonText = 'SHOW' }) {
+export default function AppPopup({ viewOpen, viewClosed, title = 'Popup title' }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View>
@@ -21,15 +21,16 @@ export default function AppPopup({ viewOpen, viewClosed, showButtonText = 'SHOW'
             justifyContent: 'flex-end',
           }}>
         <Box backgroundColor="gray.200">
-          <Pressable
-            style={{
-              alignSelf: 'flex-end',
-              marginRight: 2,
-              marginTop: 2,
-              padding: 10,
-            }}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <MaterialIcons name="close" size={10} color="#000" />
+            <Text>{title}</Text>
+            <Pressable
+                style={{
+                alignSelf: 'flex-end',
+                marginRight: 2,
+                marginTop: 2,
+                padding: 10,
+                }}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <MaterialIcons name="close" size={10} color="#000" />
           </Pressable>
 
           {viewOpen}
