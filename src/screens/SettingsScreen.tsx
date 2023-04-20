@@ -18,6 +18,8 @@ import {useChangeUserMutation} from '../services/api';
 import {selectIsLoggedIn, logout} from '../store/authSlice';
 import {useAppSelector, useAppDispatch} from '../store/hooks';
 import type {TabScreenProps} from '../types/navigation';
+import AppAvatar from '../components/AppAvatar';
+
 
 export default function SettingsScreen({
   navigation,
@@ -71,17 +73,15 @@ export default function SettingsScreen({
     <View>
       <VStack px="2" space="9">
         <Box alignItems="center" position="relative">
-          <Image
-            source={
-              user.profilePhotoUrl
-                ? { uri: "http://localhost:8000"+user.profilePhotoUrl }
-                : {
-                    uri: `https://ui-avatars.com/api/?name=${user.displayName}&background=random&size=200`,
-                  }
-            }
-            borderRadius={100}
-            alt="Profile photo"
-            size="xl"
+          <AppAvatar
+            size="2xl"
+            user={{
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              displayName: user.displayName,
+              profilePhotoUrl: user.profilePhotoUrl ? "http://localhost:8000"+user.profilePhotoUrl : undefined,
+            }}
           />
 
           <Button
