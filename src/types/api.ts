@@ -27,6 +27,10 @@ export interface StatusRequest {
   text: string
 }
 
+interface StatusDeleteRequest {
+  id: number;
+}
+
 export interface UserChangeRequest {
   displayName: string;
   profilePhoto: File;

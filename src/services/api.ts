@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import type {AuthResponse, StatusResponse, LoginRequest, RegisterRequest, UserChangeRequest, StatusRequest} from '../types/api';
+import type {AuthResponse, StatusResponse, StatusDeleteRequest, LoginRequest, RegisterRequest, UserChangeRequest, StatusRequest} from '../types/api';
 import type {AppRootState} from '../types/store';
 
 export const api = createApi({
@@ -27,6 +27,9 @@ export const api = createApi({
     getStatuses: builder.query<StatusResponse[], void>({
       query: () => 'statuses',
     }),
+    deleteStatus: builder.mutation<AuthResponse, void>({
+      query: ({id}) => ({url: `statuses/${id}`, method: 'DELETE'}),
+    }),
     changeUser: builder.mutation<AuthResponse, UserChangeRequest>({
       query: (request) => {
         const formData = new FormData();
@@ -47,4 +50,4 @@ export const api = createApi({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useStatusMutation, useChangeUserMutation, useGetStatusesQuery } = api;
+export const { useLoginMutation, useRegisterMutation, useStatusMutation, useDeleteStatusMutation, useChangeUserMutation, useGetStatusesQuery } = api;
