@@ -68,6 +68,7 @@ export default function StatusScreen() {
 
 
     await getLocation();
+    await new Promise(resolve => setTimeout(resolve, 100));
     console.log(form);
     createStatus(form);
 
