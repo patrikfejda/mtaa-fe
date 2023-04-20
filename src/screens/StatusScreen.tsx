@@ -10,6 +10,7 @@ import {
   Icon,
   IconButton,
   Input,
+  Toast,
 } from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AppAvatarItem from '../components/AppAvatarItem';
@@ -130,6 +131,19 @@ export default function StatusScreen() {
     getLocation();
   }, []);
 
+  const handleDeleteClick = (id) => {
+    deleteStatus({ id: id }).unwrap().then(() => {
+      Toast.show({
+        title: 'Status deleted successfully.',
+        duration: 3000,
+        placement: "top",
+        type: 'success'
+      });
+      refetch();
+    });
+  };
+
+
   views = [];
   data?.map((status) => {
     console.log({status});
@@ -163,7 +177,7 @@ export default function StatusScreen() {
         </Button>
         {isMyStatusCondition && (
           <Button marginBottom="2" backgroundColor="red.700"
-          onPress={() => deleteStatus({ "id": status.id })} disabled={isLoadingDeleteingStatus}
+          onPress={() => handleDeleteClick(status.id)} disabled={isLoadingDeleteingStatus}
           >Delete status</Button>
         )}
       </Box>
