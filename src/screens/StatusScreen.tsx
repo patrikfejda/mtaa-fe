@@ -100,12 +100,10 @@ export default function StatusScreen() {
     await getLocation();
     await new Promise(resolve => setTimeout(resolve, 100));
     console.log(form);
-    createStatus(form);
-
-    console.log("https://www.google.com/maps/search/?api=1&query=" + form.latitude + "," + form.longitude);
-    console.log(formatGPS(form.latitude, "lat") + ", " + formatGPS(form.longitude, "lon"))
+    createStatus(form).unwrap().then(() => {setForm({...form, text: ''})}).then(() => {refetch();});
+    // console.log("https://www.google.com/maps/search/?api=1&query=" + form.latitude + "," + form.longitude);
+    // console.log(formatGPS(form.latitude, "lat") + ", " + formatGPS(form.longitude, "lon"))
     setForm({...form, text: ''});
-    refetch();
   }
 
   const getLocation = async () => {
