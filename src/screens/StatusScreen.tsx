@@ -173,13 +173,7 @@ export default function StatusScreen() {
         {data?.map((status) => (
           <AppAvatarItem
           isHighlighted={true}
-          user={{
-            id: 1,
-            username: status.author.username,
-            email: status.author.email,
-            displayName: status.author.displayName,
-            profilePhotoUrl: status.author.profilePhotoUrl ? ""+status.author.profilePhotoUrl : undefined,
-          }}
+          user={user}
           date={status.created_at}
           title={status.author.displayName}
           titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}

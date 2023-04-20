@@ -75,13 +75,7 @@ export default function SettingsScreen({
         <Box alignItems="center" position="relative">
           <AppAvatar
             size="2xl"
-            user={{
-              id: user.id,
-              username: user.username,
-              email: user.email,
-              displayName: user.displayName,
-              profilePhotoUrl: user.profilePhotoUrl ? ""+user.profilePhotoUrl : undefined,
-            }}
+            user={user}
           />
 
           <Button
