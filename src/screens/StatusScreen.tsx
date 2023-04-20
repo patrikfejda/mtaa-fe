@@ -172,13 +172,13 @@ export default function StatusScreen() {
         />
         {data?.map((status) => (
           <AppAvatarItem
-          key={status.id}
+          isHighlighted={true}
           user={{
             id: 1,
             username: status.author.username,
             email: status.author.email,
             displayName: status.author.displayName,
-            profilePhotoUrl: "http://localhost:8000"+status.author.profilePhotoUrl,
+            profilePhotoUrl: status.author.profilePhotoUrl ? "http://localhost:8000"+status.author.profilePhotoUrl : undefined,
           }}
           date={status.created_at}
           title={status.author.displayName}
