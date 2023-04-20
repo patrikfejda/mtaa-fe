@@ -20,7 +20,7 @@ export default function AppPopup({ viewOpen, viewClosed, showButtonText = 'SHOW'
             flex: 1,
             justifyContent: 'flex-end',
           }}>
-        <Box backgroundColor="primary.700">
+        <Box backgroundColor="gray.200">
           <Pressable
             style={{
               alignSelf: 'flex-end',

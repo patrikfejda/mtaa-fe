@@ -144,7 +144,7 @@ export default function StatusScreen() {
     console.log(status.author.displayName);
     googleMapsLink = "https://www.google.com/maps/search/?api=1&query=" + status.latitude + "," + status.longitude;
     const openView = (
-      <Box>
+      <Box marginLeft="2" marginRight="2">
         <Text>Status of {status.author.displayName}</Text>
         <AppAvatarItem
               isHighlighted={true}
@@ -153,18 +153,19 @@ export default function StatusScreen() {
               title={status.author.displayName}
               titleGrayedOut={status.author.id === user.id ? 'Me' : undefined}
         />
-        <TextArea>{status.text}</TextArea>
-        <Button variant="outline">
+        <Text multiline={true} marginBottom="2">{status.text}</Text>
+        <Button variant="outline" marginBottom="2">
           <Link href={googleMapsLink}>
             {formatGPS(status.latitude, "lat") + ", " + formatGPS(status.longitude, "lon")}
           </Link>
         </Button>
-        <Button>Delete status</Button>
+        <Button marginBottom="2" backgroundColor="red.700">Delete status</Button>
       </Box>
     )
     views.push({
       'closed': closedView,
       'open': openView,
+      'key': status.id,
     })
   })
 
