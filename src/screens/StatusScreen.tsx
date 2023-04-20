@@ -24,10 +24,13 @@ export default function StatusScreen() {
   const [form, setForm] = useState({
     longitude: "0",
     latitude: "0",
-    text: 'No status is set!',
+    text: '',
   });
 
   const { statuses, error, isLoading } = useGetStatusesQuery();
+  console.log("FETCHED THIS FROM /STATUSES")
+  console.log(statuses);
+
 
   const formatGPS = (dd, direction) => {
     const absDD = Math.abs(dd);
@@ -143,10 +146,6 @@ export default function StatusScreen() {
       <Text color="text.400" fontWeight="medium" pt="6" pb="1">
         Status wall
       </Text>
-      <Text>{user.id}</Text>
-      {statuses?.map((status) => (
-        <Text>X</Text>
-      ))}
       {/* Example use */}
       <AppAvatarItem
         isHighlighted={true}
