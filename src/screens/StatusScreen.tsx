@@ -182,9 +182,9 @@ export default function StatusScreen() {
       </Box>
     )
     views.push({
+      'key': status.id,
       'closed': closedView,
       'open': openView,
-      'key': status.id,
       'title': trimText("Status of " + status.author.displayName, 30),
     })
   })
