@@ -1,4 +1,4 @@
-import { launchImageLibrary } from "react-native-image-picker";
+import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 import RNFS from 'react-native-fs';
 import {
   Box,
@@ -20,6 +20,7 @@ import {useAppSelector, useAppDispatch} from '../store/hooks';
 import type {TabScreenProps} from '../types/navigation';
 import AppAvatar from '../components/AppAvatar';
 import {trimText} from '../utils/text';
+import { Alert } from 'react-native';
 
 
 export default function SettingsScreen({
@@ -39,35 +40,45 @@ export default function SettingsScreen({
   };
 
   const handleImageChange = () => {
-    launchImageLibrary(
-      {
-        mediaType: 'photo',
-        includeBase64: false,
-        maxHeight: 200,
-        maxWidth: 200,
-      },
-      response => {
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else {
-          const fileUri = response.assets[0].uri;
-          const fileName = response.assets[0].fileName;
-          const fileType = response.assets[0].type;
-          const file = {
-            uri: fileUri,
-            name: fileName,
-            type: fileType,
-          };
-          setForm({...form, profilePhoto: file});
-
-          changeUser({...form, profilePhoto: file});
-        }
-      },
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 200,
+      maxWidth: 200,
+    };
+  
+    // Show options for selecting an image
+    Alert.alert(
+      'Select an image',
+      '',
+      [
+        { text: 'Camera', onPress: () => launchCamera(options, handleResponse) },
+        { text: 'Gallery', onPress: () => launchImageLibrary(options, handleResponse) },
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
+      ],
+      { cancelable: true }
     );
   };
-
+  
+  const handleResponse = response => {
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    } else {
+      const fileUri = response.assets[0].uri;
+      const fileName = response.assets[0].fileName;
+      const fileType = response.assets[0].type;
+      const file = {
+        uri: fileUri,
+        name: fileName,
+        type: fileType,
+      };
+      setForm({...form, profilePhoto: file});
+      changeUser({...form, profilePhoto: file});
+    }
+  };
+  
 
   return (
     <View>
