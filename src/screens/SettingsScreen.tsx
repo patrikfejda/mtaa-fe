@@ -1,38 +1,32 @@
-import { launchImageLibrary, launchCamera } from "react-native-image-picker";
-import RNFS from 'react-native-fs';
 import {
   Box,
   Button,
   FormControl,
   HStack,
   Icon,
-  Image,
   Input,
   Text,
   VStack,
   View,
 } from 'native-base';
 import React, {useState} from 'react';
+import {Alert} from 'react-native';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useChangeUserMutation} from '../services/api';
-import {selectIsLoggedIn, logout} from '../store/authSlice';
-import {useAppSelector, useAppDispatch} from '../store/hooks';
-import type {TabScreenProps} from '../types/navigation';
 import AppAvatar from '../components/AppAvatar';
+import {useChangeUserMutation} from '../services/api';
+import {logout} from '../store/authSlice';
+import {useAppDispatch, useAppSelector} from '../store/hooks';
+import type {TabScreenProps} from '../types/navigation';
 import {trimText} from '../utils/text';
-import { Alert } from 'react-native';
 
-
-export default function SettingsScreen({
-  navigation,
-}: TabScreenProps<'Settings'>) {
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const [changeUser, {isLoading}] = useChangeUserMutation();
+export default function SettingsScreen({}: TabScreenProps<'Settings'>) {
+  const [changeUser] = useChangeUserMutation();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
   const [form, setForm] = useState({
-    displayName: user.displayName,
-    profilePhoto: "",
+    displayName: user?.displayName,
+    profilePhoto: '',
   });
 
   const handleLogout = () => {
@@ -46,20 +40,23 @@ export default function SettingsScreen({
       maxHeight: 200,
       maxWidth: 200,
     };
-  
+
     // Show options for selecting an image
     Alert.alert(
       'Select an image',
       '',
       [
-        { text: 'Camera', onPress: () => launchCamera(options, handleResponse) },
-        { text: 'Gallery', onPress: () => launchImageLibrary(options, handleResponse) },
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
+        {text: 'Camera', onPress: () => launchCamera(options, handleResponse)},
+        {
+          text: 'Gallery',
+          onPress: () => launchImageLibrary(options, handleResponse),
+        },
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
       ],
-      { cancelable: true }
+      {cancelable: true},
     );
   };
-  
+
   const handleResponse = response => {
     if (response.didCancel) {
       console.log('User cancelled image picker');
@@ -78,16 +75,12 @@ export default function SettingsScreen({
       changeUser({...form, profilePhoto: file});
     }
   };
-  
 
   return (
     <View>
       <VStack px="2" space="9">
         <Box alignItems="center" position="relative">
-          <AppAvatar
-            size="2xl"
-            user={user}
-          />
+          <AppAvatar size="2xl" user={user} />
 
           <Button
             position="absolute"
@@ -110,10 +103,10 @@ export default function SettingsScreen({
                 setForm(updatedForm);
                 changeUser(updatedForm);
               }}
-  type="text"
-  defaultValue={user.displayName}
-  variant="filled"
-/>
+              type="text"
+              defaultValue={user.displayName}
+              variant="filled"
+            />
           </FormControl>
         </VStack>
         <VStack alignItems="center">

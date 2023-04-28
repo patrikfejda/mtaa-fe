@@ -3,9 +3,9 @@ import {enUS} from 'date-fns/locale';
 
 const formatRelativeLocale = {
   lastWeek: 'MMM L, yyyy',
-  yesterday: "'Yesterday', h:m a",
-  today: 'h:m a',
-  tomorrow: "'Tomorrow', h:m a",
+  yesterday: "'Yesterday', h:mm a",
+  today: 'h:mm a',
+  tomorrow: "'Tomorrow', h:mm a",
   nextWeek: 'MMM L, yyyy',
   other: 'MMM L, yyyy',
 };

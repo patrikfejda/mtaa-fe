@@ -1,26 +1,21 @@
-import { StyleSheet, TextInput } from 'react-native';
 import {
   Box,
-  Button,
-  FormControl,
-  IconButton,
-  VStack,
-  Icon,
-  Image,
-  Input,
-  Text,
   HStack,
+  Icon,
+  IconButton,
+  Image,
+  Text,
+  VStack,
   View,
 } from 'native-base';
 import React from 'react';
+import {StyleSheet, TextInput} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import type {RootStackScreenProps} from '../types/navigation';
 
 const ChatScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.messagesContainer}>
-
         {/* Message */}
         <Box>
           <HStack alignItems="flex-end" mb={3}>
@@ -33,7 +28,7 @@ const ChatScreen = () => {
                 alt="Alternate Text"
                 size="xs"
                 mr={2}
-                />
+              />
             </Box>
             <VStack>
               <Text style={styles.senderName}>Patrik Fejda</Text>
@@ -42,8 +37,7 @@ const ChatScreen = () => {
                 px={4}
                 borderRadius={10}
                 bgColor="gray.700"
-                alignSelf="flex-end"
-                >
+                alignSelf="flex-end">
                 <Text fontSize="md">Ahoj, ako sa mas.</Text>
               </Box>
             </VStack>
@@ -59,16 +53,17 @@ const ChatScreen = () => {
                 px={4}
                 borderRadius={10}
                 bgColor="blue.900"
-                alignSelf="flex-end"
-                >
-                <Text fontSize="md" color="white">Mam sa super.</Text>
+                alignSelf="flex-end">
+                <Text fontSize="md" color="white">
+                  Mam sa super.
+                </Text>
               </Box>
             </VStack>
           </HStack>
         </Box>
 
-      {/* Message */}
-      <Box>
+        {/* Message */}
+        <Box>
           <HStack alignItems="flex-end" mb={3}>
             <Box alignItems="center">
               <Image
@@ -79,7 +74,7 @@ const ChatScreen = () => {
                 alt="Alternate Text"
                 size="xs"
                 mr={2}
-                />
+              />
             </Box>
             <VStack>
               <Text style={styles.senderName}>Patrik Fejda</Text>
@@ -88,8 +83,7 @@ const ChatScreen = () => {
                 px={4}
                 borderRadius={10}
                 bgColor="gray.700"
-                alignSelf="flex-end"
-                >
+                alignSelf="flex-end">
                 <Text fontSize="md">Super, tesim sa.</Text>
               </Box>
             </VStack>
@@ -105,9 +99,10 @@ const ChatScreen = () => {
                 px={4}
                 borderRadius={10}
                 bgColor="blue.900"
-                alignSelf="flex-end"
-                >
-                <Text fontSize="md" color="white">xDxD</Text>
+                alignSelf="flex-end">
+                <Text fontSize="md" color="white">
+                  xDxD
+                </Text>
               </Box>
             </VStack>
           </HStack>
@@ -122,34 +117,31 @@ const ChatScreen = () => {
                 px={4}
                 borderRadius={10}
                 bgColor="blue.900"
-                alignSelf="flex-end"
-                >
+                alignSelf="flex-end">
                 <Image
-                source={{
-                  uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
-                }}
-                alt="Alternate Text"
-                size="2xl"
-                mr={2}
+                  source={{
+                    uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
+                  }}
+                  alt="Alternate Text"
+                  size="2xl"
+                  mr={2}
                 />
-                <Text fontSize="md" color="white">Tu vyzeras jak keby si sa prave posral</Text>
+                <Text fontSize="md" color="white">
+                  Tu vyzeras jak keby si sa prave posral
+                </Text>
               </Box>
             </VStack>
           </HStack>
         </Box>
-
       </View>
       <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Type message"
-        />
+        <TextInput style={styles.input} placeholder="Type message" />
         <IconButton
-            icon={<Icon as={MaterialIcons} color="text.50" name="send" />}
-            colorScheme="light"
-            size="lg"
-            p="0"
-          />
+          icon={<Icon as={MaterialIcons} color="text.50" name="send" />}
+          colorScheme="light"
+          size="lg"
+          p="0"
+        />
       </View>
     </View>
   );

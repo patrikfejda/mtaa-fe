@@ -6,15 +6,14 @@ export interface User {
   profilePhotoUrl?: string;
 }
 
-interface StatusResponse {
+export interface StatusResponse {
   id: number;
   latitude: string;
   longitude: string;
   text: string;
-  created_at: string;
+  createdAt: string;
   author: User;
 }
-
 
 export interface LoginRequest {
   username: string;
@@ -22,12 +21,12 @@ export interface LoginRequest {
 }
 
 export interface StatusRequest {
-  latitude: string
-  longitude: string
-  text: string
+  latitude: string;
+  longitude: string;
+  text: string;
 }
 
-interface StatusDeleteRequest {
+export interface StatusDeleteRequest {
   id: number;
 }
 

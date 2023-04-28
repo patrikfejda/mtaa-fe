@@ -1,25 +1,11 @@
-import type {TabScreenProps} from '../types/navigation';
-import { StyleSheet, TextInput } from 'react-native';
-import {
-  Box,
-  Button,
-  FormControl,
-  IconButton,
-  VStack,
-  Icon,
-  Image,
-  Input,
-  Text,
-  HStack,
-  View,
-} from 'native-base';
+import {Box, Button, HStack, Image, Text, VStack, View} from 'native-base';
 import React from 'react';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import type {RootStackScreenProps} from '../types/navigation';
+import {StyleSheet} from 'react-native';
+import type {TabScreenProps} from '../types/navigation';
 
 export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
   return (
-    <View style={styles.container}>
+    <View>
       <Button
         onPress={() =>
           navigation.navigate('Messages', {name: 'Custom message title'})
@@ -27,7 +13,6 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
         Messages screen
       </Button>
       <View style={styles.messagesContainer}>
-
         {/* Message */}
         <Box>
           <HStack>
@@ -40,15 +25,16 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
                 alt="Alternate Text"
                 size="sm"
                 mr={2}
-                />
+              />
             </Box>
             <VStack>
-              <Text fontSize="lg" style={styles.senderName}>Patrik Fejda</Text>
+              <Text fontSize="lg" style={styles.senderName}>
+                Patrik Fejda
+              </Text>
               <Text fontSize="md">Ahoj, ako sa mas?</Text>
             </VStack>
           </HStack>
         </Box>
-
 
         {/* Message */}
         <Box>
@@ -62,10 +48,12 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
                 alt="Alternate Text"
                 size="sm"
                 mr={2}
-                />
+              />
             </Box>
             <VStack>
-              <Text fontSize="lg" style={styles.senderName}>The chatty squad</Text>
+              <Text fontSize="lg" style={styles.senderName}>
+                The chatty squad
+              </Text>
               <Text fontSize="md">Dneska Baron??</Text>
             </VStack>
           </HStack>
@@ -73,7 +61,7 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   messagesContainer: {
@@ -83,4 +71,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-

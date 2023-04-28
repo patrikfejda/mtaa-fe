@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Alert, Modal, Pressable, Text, View } from 'react-native';
-import { Box } from 'native-base';
+import {Alert, Modal, Pressable, Text, View} from 'react-native';
+import {Box} from 'native-base';
 
-export default function AppPopup({ viewOpen, viewClosed, title = 'Popup title' }) {
+export default function AppPopup({
+  viewOpen,
+  viewClosed,
+  title = 'Popup title',
+}) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View>
@@ -27,7 +31,9 @@ export default function AppPopup({ viewOpen, viewClosed, title = 'Popup title' }
                 top: 20,
                 left: 20,
               }}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#fff' }}>{title}</Text>
+              <Text style={{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>
+                {title}
+              </Text>
             </View>
             <Pressable
               style={{
@@ -43,9 +49,7 @@ export default function AppPopup({ viewOpen, viewClosed, title = 'Popup title' }
           </Box>
         </View>
       </Modal>
-      <Pressable onPress={() => setModalVisible(true)}>
-        {viewClosed}
-      </Pressable>
+      <Pressable onPress={() => setModalVisible(true)}>{viewClosed}</Pressable>
     </View>
   );
 }
