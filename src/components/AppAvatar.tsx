@@ -13,7 +13,7 @@ export default function AppAvatar({
       size={size === 'md' ? '42px' : size}
       source={{
         uri: user.profilePhotoUrl
-          ? 'http://localhost:8000' + user.profilePhotoUrl
+          ? 'https://patrikfejda-refactored-couscous-5r4rwrwqxw6cvjg9-8000.preview.app.github.dev' + user.profilePhotoUrl
           : undefined,
       }}
       bg="primary.600">
