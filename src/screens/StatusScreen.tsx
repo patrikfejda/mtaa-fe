@@ -52,7 +52,6 @@ export default function StatusScreen() {
     React.useCallback(() => {
       // Fetch statuses every time the screen comes into focus
       refetch();
-      setForm({...form, text: ''});
     }, []),
   );
 
