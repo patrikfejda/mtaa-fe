@@ -13,7 +13,7 @@ import type {AppRootState} from '../types/store';
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     // TODO .env file for this (react-native-config)
-    baseUrl: 'http://localhost:8000/v2/',
+    baseUrl: 'https://patrikfejda-refactored-couscous-5r4rwrwqxw6cvjg9-8000.preview.app.github.dev/v2/',
     prepareHeaders: (headers, {getState}) => {
       const token = (getState() as AppRootState).auth.accessToken;
       if (token) {
