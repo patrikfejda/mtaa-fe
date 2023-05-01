@@ -61,7 +61,7 @@ export default function RegisterScreen({
             Register
           </Button>
 
-          <Text mt="6" mb="2">
+          <Text color="text.500" mt="6" mb="2">
             Already have an account?
           </Text>
           <Button

@@ -1,10 +1,10 @@
 import type {IAlertProps} from 'native-base';
-import type {User} from './api';
+import type {Message, MessageCreateStore, User} from './api';
 
 export interface AppAvatarProps {
   customFallback?: string;
   size?: 'xs' | 'md' | 'lg';
-  user: User;
+  user?: User;
 }
 
 export interface AppAvatarItemProps {
@@ -14,7 +14,24 @@ export interface AppAvatarItemProps {
   titleFontSize?: string;
   titleGrayedOut?: string;
   subtitle?: string;
-  user: User;
+  avatarCustomFallback?: string;
+  user?: User;
+}
+
+export interface AppModalProps {
+  children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface AppModalInstanceProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface AppMessageProps {
+  message: Message | MessageCreateStore;
+  isMine: boolean;
 }
 
 export interface AppToastProps {

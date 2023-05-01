@@ -1,9 +1,10 @@
 import {createSlice, isAnyOf} from '@reduxjs/toolkit';
 import {api} from '../services/api';
+import type {User} from '../types/api';
 import type {AppRootState, AuthState} from '../types/store';
 
 const initialState: AuthState = {
-  user: null,
+  user: {} as User,
   accessToken: null,
 };
 
@@ -13,7 +14,7 @@ const slice = createSlice({
   reducers: {
     logout: state => {
       state.accessToken = null;
-      state.user = null;
+      state.user = {} as User;
     },
   },
   extraReducers: builder => {
@@ -33,5 +34,6 @@ const slice = createSlice({
 export const {logout} = slice.actions;
 
 export const selectIsLoggedIn = (state: AppRootState) => state.auth.accessToken;
+export const selectCurrentUser = (state: AppRootState) => state.auth.user;
 
 export default slice.reducer;

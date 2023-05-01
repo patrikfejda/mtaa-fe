@@ -6,7 +6,10 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   Tabs: undefined;
-  Messages: {name: string};
+  Messages: {
+    name: string;
+    conversationId: number;
+  };
 };
 
 export type TabParamList = {

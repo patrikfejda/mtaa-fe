@@ -14,14 +14,14 @@ import {Alert} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AppAvatar from '../components/AppAvatar';
-import {useChangeUserMutation} from '../services/api';
+import {useUpdateUserMutation} from '../services/api';
 import {logout} from '../store/authSlice';
 import {useAppDispatch, useAppSelector} from '../store/hooks';
 import type {TabScreenProps} from '../types/navigation';
 import {trimText} from '../utils/text';
 
 export default function SettingsScreen({}: TabScreenProps<'Settings'>) {
-  const [changeUser] = useChangeUserMutation();
+  const [changeUser] = useUpdateUserMutation();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
   const [form, setForm] = useState({

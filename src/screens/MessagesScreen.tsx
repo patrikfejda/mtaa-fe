@@ -1,187 +1,152 @@
+import type {Draft} from '@reduxjs/toolkit';
 import {
-  Box,
   HStack,
   Icon,
   IconButton,
-  Image,
+  Input,
+  ScrollView,
   Text,
   VStack,
-  View,
 } from 'native-base';
-import React from 'react';
-import {StyleSheet, TextInput} from 'react-native';
+import React, {useRef} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useImmerReducer} from 'use-immer';
+import {v4 as uuidv4} from 'uuid';
+import AppMessage from '../components/AppMessage';
+import {selectCurrentUser} from '../store/authSlice';
+import {
+  addMessage,
+  createSelectConversationById,
+} from '../store/conversationsSlice';
+import {useAppDispatch, useAppSelector} from '../store/hooks';
+import type {MessageCreateStore, User} from '../types/api';
+import type {RootStackScreenProps} from '../types/navigation';
 
-const ChatScreen = () => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.messagesContainer}>
-        {/* Message */}
-        <Box>
-          <HStack alignItems="flex-end" mb={3}>
-            <Box alignItems="center">
-              <Image
-                source={{
-                  uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
-                }}
-                borderRadius={100}
-                alt="Alternate Text"
-                size="xs"
-                mr={2}
-              />
-            </Box>
-            <VStack>
-              <Text style={styles.senderName}>Patrik Fejda</Text>
-              <Box
-                py={2}
-                px={4}
-                borderRadius={10}
-                bgColor="gray.700"
-                alignSelf="flex-end">
-                <Text fontSize="md">Ahoj, ako sa mas.</Text>
-              </Box>
-            </VStack>
-          </HStack>
-        </Box>
+type InitialMessagePayload = {currentUser: User; conversationId: number};
 
-        {/* Your Message */}
-        <Box alignSelf="flex-end">
-          <HStack alignItems="flex-end" mb={3}>
-            <VStack>
-              <Box
-                py={2}
-                px={4}
-                borderRadius={10}
-                bgColor="blue.900"
-                alignSelf="flex-end">
-                <Text fontSize="md" color="white">
-                  Mam sa super.
-                </Text>
-              </Box>
-            </VStack>
-          </HStack>
-        </Box>
+function createInitialMessage({
+  currentUser,
+  conversationId,
+}: InitialMessagePayload): MessageCreateStore {
+  return {
+    synchronizationKey: uuidv4(),
+    conversationId,
+    text: '',
+    author: currentUser,
+  };
+}
 
-        {/* Message */}
-        <Box>
-          <HStack alignItems="flex-end" mb={3}>
-            <Box alignItems="center">
-              <Image
-                source={{
-                  uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
-                }}
-                borderRadius={100}
-                alt="Alternate Text"
-                size="xs"
-                mr={2}
-              />
-            </Box>
-            <VStack>
-              <Text style={styles.senderName}>Patrik Fejda</Text>
-              <Box
-                py={2}
-                px={4}
-                borderRadius={10}
-                bgColor="gray.700"
-                alignSelf="flex-end">
-                <Text fontSize="md">Super, tesim sa.</Text>
-              </Box>
-            </VStack>
-          </HStack>
-        </Box>
+type Action =
+  | {type: 'reseted'; payload: InitialMessagePayload}
+  | {type: 'message_sent'; payload: string};
 
-        {/* Your Message */}
-        <Box alignSelf="flex-end">
-          <HStack alignItems="flex-end" mb={3}>
-            <VStack>
-              <Box
-                py={2}
-                px={4}
-                borderRadius={10}
-                bgColor="blue.900"
-                alignSelf="flex-end">
-                <Text fontSize="md" color="white">
-                  xDxD
-                </Text>
-              </Box>
-            </VStack>
-          </HStack>
-        </Box>
+function reducer(
+  messageDraft: Draft<MessageCreateStore>,
+  {type, payload}: Action,
+) {
+  switch (type) {
+    case 'reseted':
+      return createInitialMessage(payload);
+    case 'message_sent':
+      messageDraft.text = payload;
+  }
+}
 
-        {/* Your Message */}
-        <Box alignSelf="flex-end">
-          <HStack alignItems="flex-end" mb={3}>
-            <VStack>
-              <Box
-                py={2}
-                px={4}
-                borderRadius={10}
-                bgColor="blue.900"
-                alignSelf="flex-end">
-                <Image
-                  source={{
-                    uri: 'https://media.licdn.com/dms/image/C5603AQFhiXz3Wsfikg/profile-displayphoto-shrink_200_200/0/1624210570019?e=1686787200&v=beta&t=RWTnov9vygyEX60DZnBn3dDZLCyOU0ezAmv77K9PD7s',
-                  }}
-                  alt="Alternate Text"
-                  size="2xl"
-                  mr={2}
-                />
-                <Text fontSize="md" color="white">
-                  Tu vyzeras jak keby si sa prave posral
-                </Text>
-              </Box>
-            </VStack>
-          </HStack>
-        </Box>
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder="Type message" />
-        <IconButton
-          icon={<Icon as={MaterialIcons} color="text.50" name="send" />}
-          colorScheme="light"
-          size="lg"
-          p="0"
-        />
-      </View>
-    </View>
+export default function MessagesScreen({
+  route: {
+    params: {conversationId},
+  },
+}: RootStackScreenProps<'Messages'>) {
+  const currentUser = useAppSelector(selectCurrentUser);
+  const scrollViewRef = useRef<typeof ScrollView>();
+
+  const dispatch = useAppDispatch();
+
+  const conversation = useAppSelector(
+    createSelectConversationById(conversationId),
   );
-};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  messagesContainer: {
-    flex: 1,
-    padding: 10,
-  },
-  messageContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginVertical: 5,
-  },
-  senderName: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    marginTop: 5,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderTopWidth: 1,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#ffffff',
-    color: '#ffffff',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginRight: 10,
-  },
-});
+  const [newMessage, newMessageDispatch] = useImmerReducer(
+    reducer,
+    {currentUser, conversationId},
+    createInitialMessage,
+  );
 
-export default ChatScreen;
+  function onSendPress() {
+    dispatch(addMessage(newMessage));
+    newMessageDispatch({
+      type: 'reseted',
+      payload: {currentUser, conversationId},
+    });
+  }
+
+  return (
+    <>
+      <ScrollView
+        ref={scrollViewRef}
+        onContentSizeChange={() =>
+          // @ts-ignore
+          scrollViewRef.current?.scrollToEnd({animated: false})
+        }>
+        <VStack px="2" pb="8" space="6">
+          {/* TODO no messages */}
+          {conversation?.messages.length === 0 && (
+            <Text color="text.50" mt="2">
+              You don't have any messages yet.
+            </Text>
+          )}
+          {conversation?.messages.map(message => (
+            <AppMessage
+              key={message.synchronizationKey}
+              message={message}
+              isMine={message.author.id === currentUser.id}
+            />
+          ))}
+        </VStack>
+      </ScrollView>
+
+      <HStack
+        bgColor="muted.800"
+        position="relative"
+        overflow="scroll"
+        px="2"
+        py="5px">
+        <Input
+          onChangeText={value =>
+            newMessageDispatch({type: 'message_sent', payload: value})
+          }
+          maxLength={256}
+          multiline={true}
+          scrollEnabled={true}
+          value={newMessage.text}
+          bgColor="muted.700"
+          flex="1"
+          minHeight="10"
+          maxHeight="100px"
+          pl="2"
+          pr="10"
+          size="md"
+          variant="solid"
+        />
+        <IconButton
+          onPress={onSendPress}
+          disabled={newMessage.text.length === 0}
+          icon={
+            <Icon
+              as={MaterialIcons}
+              color={newMessage.text.length === 0 ? 'text.500' : 'primary.400'}
+              name="send"
+            />
+          }
+          borderRadius="md"
+          position="absolute"
+          bottom="5px"
+          right="2"
+          width="10"
+          height="10"
+          variant="ghost"
+        />
+      </HStack>
+    </>
+  );
+}

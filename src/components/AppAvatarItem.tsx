@@ -11,18 +11,25 @@ export default function AppAvatarItem({
   titleFontSize,
   titleGrayedOut,
   subtitle,
+  avatarCustomFallback,
   user,
 }: AppAvatarItemProps) {
   return (
-    <HStack space="2.5">
-      <AppAvatar user={user} />
+    <HStack
+      flexShrink="1"
+      alignItems="center"
+      height="12"
+      width="full"
+      space="2.5">
+      <AppAvatar customFallback={avatarCustomFallback} user={user} />
       <VStack justifyContent="center" flex="1">
         {/* NOTE: React Native doesn't support relative line height */}
-        {/* TODO fontWeight is not inherited */}
-        <HStack fontWeight="medium" space="1">
+        <HStack space="1">
           <Text
             color={isHighlighted ? 'text.50' : 'text.400'}
             fontSize={titleFontSize ?? 'md'}
+            numberOfLines={1}
+            flexShrink="1"
             lineHeight="20px">
             {title}
           </Text>
