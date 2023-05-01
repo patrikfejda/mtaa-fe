@@ -26,16 +26,16 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AppAvatarItem from '../components/AppAvatarItem';
 import AppPopup from '../components/AppPopup';
 import {
+  useCreateStatusMutation,
   useDeleteStatusMutation,
   useGetStatusesQuery,
-  useStatusMutation,
 } from '../services/api';
 import {useAppSelector} from '../store/hooks';
 
 import {trimText} from '../utils/text';
 
 export default function StatusScreen() {
-  const [createStatus] = useStatusMutation();
+  const [createStatus] = useCreateStatusMutation();
   const [deleteStatus, {isLoading: isLoadingDeleteStatus}] =
     useDeleteStatusMutation();
   const user = useAppSelector(state => state.auth.user);
@@ -260,7 +260,7 @@ export default function StatusScreen() {
           />
         </HStack>
 
-        <Text color="text.400" fontWeight="medium" pt="6" pb="1">
+        <Text color="text.400" pt="6" pb="1">
           Status wall
         </Text>
         {/* Example use */}

@@ -7,8 +7,8 @@ export default function LoginScreen({
   navigation,
 }: RootStackScreenProps<'Login'>) {
   const [form, setForm] = useState({
-    username: '123456789',
-    password: '123456789',
+    username: '',
+    password: '',
   });
 
   const [login, {isLoading}] = useLoginMutation();
@@ -50,7 +50,7 @@ export default function LoginScreen({
             Login
           </Button>
 
-          <Text mt="6" mb="2">
+          <Text color="text.500" mt="6" mb="2">
             Don't have an account?
           </Text>
           <Button

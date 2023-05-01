@@ -1,11 +1,14 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {REHYDRATE} from 'redux-persist';
 import type {
   AuthResponse,
+  Conversation,
   LoginRequest,
   RegisterRequest,
+  Status,
   StatusDeleteRequest,
   StatusRequest,
-  StatusResponse,
+  User,
   UserChangeRequest,
 } from '../types/api';
 import type {AppRootState} from '../types/store';
@@ -22,6 +25,11 @@ export const api = createApi({
       return headers;
     },
   }),
+  extractRehydrationInfo(action, {reducerPath}) {
+    if (action.type === REHYDRATE && action.payload) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: builder => ({
     login: builder.mutation<AuthResponse, LoginRequest>({
       query: request => ({url: 'auth/login', method: 'POST', body: request}),
@@ -29,17 +37,24 @@ export const api = createApi({
     register: builder.mutation<AuthResponse, RegisterRequest>({
       query: request => ({url: 'auth/register', method: 'POST', body: request}),
     }),
-    status: builder.mutation<StatusResponse, StatusRequest>({
-      query: request => ({url: 'statuses', method: 'POST', body: request}),
-    }),
-    getStatuses: builder.query<StatusResponse[], void>({
+    getStatuses: builder.query<Status[], void>({
       query: () => 'statuses',
+    }),
+    createStatus: builder.mutation<Status, StatusRequest>({
+      query: request => ({url: 'statuses', method: 'POST', body: request}),
     }),
     deleteStatus: builder.mutation<AuthResponse, StatusDeleteRequest>({
       query: ({id}) => ({url: `statuses/${id}`, method: 'DELETE'}),
     }),
-    changeUser: builder.mutation<AuthResponse, UserChangeRequest>({
+    getUsers: builder.query<User[], void>({
+      query: () => 'users',
+    }),
+    getUserConversations: builder.query<Conversation[], void>({
+      query: () => 'users/me/conversations',
+    }),
+    updateUser: builder.mutation<User, UserChangeRequest>({
       query: request => {
+        // TODO
         const formData = new FormData();
         formData.append('displayName', request.displayName);
         if (request.profilePhoto) {
@@ -61,8 +76,10 @@ export const api = createApi({
 export const {
   useLoginMutation,
   useRegisterMutation,
-  useStatusMutation,
+  useCreateStatusMutation,
   useDeleteStatusMutation,
-  useChangeUserMutation,
+  useUpdateUserMutation,
+  useGetUsersQuery,
+  useGetUserConversationsQuery,
   useGetStatusesQuery,
 } = api;

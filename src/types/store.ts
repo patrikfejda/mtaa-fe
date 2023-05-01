@@ -1,10 +1,19 @@
 import type {Action, ThunkAction} from '@reduxjs/toolkit';
 import type {store} from '../store';
-import type {User} from './api';
+import type {Conversation, ConversationCreateStore, User} from './api';
+import type {WebSocketMessage} from './websocket';
 
 export interface AuthState {
-  user: User | null;
+  user: User;
   accessToken: string | null;
+}
+
+export interface ConversationState {
+  all: (Conversation | ConversationCreateStore)[];
+}
+
+export interface WebSocketState {
+  queue: WebSocketMessage[];
 }
 
 export type AppDispatch = typeof store.dispatch;
