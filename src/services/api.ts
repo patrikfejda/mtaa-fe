@@ -1,4 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import Config from 'react-native-config';
 import {REHYDRATE} from 'redux-persist';
 import type {
   AuthResponse,
@@ -16,7 +17,7 @@ import type {AppRootState} from '../types/store';
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     // TODO .env file for this (react-native-config)
-    baseUrl: 'http://localhost:8000/v2/',
+    baseUrl: `${Config.REST_BASE_URL}/`,
     prepareHeaders: (headers, {getState}) => {
       const token = (getState() as AppRootState).auth.accessToken;
       if (token) {

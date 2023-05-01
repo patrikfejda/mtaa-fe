@@ -1,5 +1,6 @@
 import {Avatar} from 'native-base';
 import React from 'react';
+import Config from 'react-native-config';
 import type {AppAvatarProps} from '../types/component';
 import {getUserInitials} from '../utils/initials';
 
@@ -12,9 +13,8 @@ export default function AppAvatar({
     <Avatar
       size={size === 'md' ? '42px' : size}
       source={{
-        // TODO get this from .env
         uri: user?.profilePhotoUrl
-          ? `http://localhost:8000/${user.profilePhotoUrl}`
+          ? `${Config.IMG_BASE_URL}${user.profilePhotoUrl}`
           : undefined,
       }}
       bg="primary.600"

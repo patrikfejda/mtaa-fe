@@ -1,4 +1,5 @@
 import type {AnyAction, Dispatch, Middleware} from '@reduxjs/toolkit';
+import Config from 'react-native-config';
 import type {
   Conversation,
   ConversationCreateRequest,
@@ -67,8 +68,9 @@ export const websocketMiddleware: Middleware = ({getState, dispatch}) => {
         if (!ws || ws.readyState === WebSocket.CLOSED) {
           // TODO remove
           console.log('websocketMiddleware setInterval');
+          console.log('proccess env WS_BASE_URL', Config.WS_BASE_URL);
           ws = new WebSocket(
-            `ws://localhost:8000/v2/conversations/ws?token=${accessToken}`,
+            `${Config.WS_BASE_URL}/conversations/ws?token=${accessToken}`,
           );
           addWebsocketListeners(dispatch);
         }
