@@ -55,8 +55,8 @@ export default function StatusScreen() {
     }, []),
   );
 
-  console.log('FETCHED THIS FROM /STATUSES');
-  console.log(data);
+  // console.log('FETCHED THIS FROM /STATUSES');
+  // console.log(data);
 
   const formatGPS = (dd, direction) => {
     const absDD = Math.abs(dd);
@@ -73,12 +73,12 @@ export default function StatusScreen() {
   };
 
   const sendStatus = async () => {
-    console.log('sendStatus');
+    // console.log('sendStatus');
     const permissionStatus = await check(
       PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
     );
     if (permissionStatus === RESULTS.GRANTED) {
-      console.log('permission granted');
+      // console.log('permission granted');
     } else if (permissionStatus === RESULTS.DENIED) {
       const permissionRequest = await request(
         PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -93,7 +93,7 @@ export default function StatusScreen() {
             });
           },
           error => {
-            console.log(error);
+            // console.log(error);
           },
           {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
         );
@@ -118,7 +118,7 @@ export default function StatusScreen() {
 
     await getLocation();
     await new Promise(resolve => setTimeout(resolve, 100));
-    console.log(form);
+    // console.log(form);
     createStatus(form)
       .unwrap()
       .then(() => {
@@ -127,13 +127,13 @@ export default function StatusScreen() {
       .then(() => {
         refetch();
       });
-    // console.log("https://www.google.com/maps/search/?api=1&query=" + form.latitude + "," + form.longitude);
-    // console.log(formatGPS(form.latitude, "lat") + ", " + formatGPS(form.longitude, "lon"))
+    // // console.log("https://www.google.com/maps/search/?api=1&query=" + form.latitude + "," + form.longitude);
+    // // console.log(formatGPS(form.latitude, "lat") + ", " + formatGPS(form.longitude, "lon"))
     setForm({...form, text: ''});
   };
 
   const getLocation = async () => {
-    console.log('gettting location');
+    // console.log('gettting location');
     try {
       const permissionStatus = await check(
         PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -148,13 +148,13 @@ export default function StatusScreen() {
             });
           },
           error => {
-            console.log(error);
+            // console.log(error);
           },
           {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
         );
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -178,7 +178,7 @@ export default function StatusScreen() {
 
   let views = [];
   data?.map(status => {
-    console.log({status});
+    // console.log({status});
     const closedView = (
       <AppAvatarItem
         isHighlighted={true}
@@ -190,7 +190,7 @@ export default function StatusScreen() {
         subtitle={status.text}
       />
     );
-    console.log(status.author.displayName);
+    // console.log(status.author.displayName);
     const googleMapsLink =
       'https://www.google.com/maps/search/?api=1&query=' +
       status.latitude +

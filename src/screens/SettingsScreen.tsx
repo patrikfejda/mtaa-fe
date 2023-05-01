@@ -59,9 +59,9 @@ export default function SettingsScreen({}: TabScreenProps<'Settings'>) {
 
   const handleResponse = response => {
     if (response.didCancel) {
-      console.log('User cancelled image picker');
+      // console.log('User cancelled image picker');
     } else if (response.error) {
-      console.log('ImagePicker Error: ', response.error);
+      // console.log('ImagePicker Error: ', response.error);
     } else {
       const fileUri = response.assets[0].uri;
       const fileName = response.assets[0].fileName;
