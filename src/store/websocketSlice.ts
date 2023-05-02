@@ -17,9 +17,12 @@ const slice = createSlice({
     removeFromQueue: state => {
       state.queue.shift();
     },
+    clearQueue: state => {
+      state.queue = [];
+    },
   },
 });
 
-export const {addToQueue, removeFromQueue} = slice.actions;
+export const {addToQueue, clearQueue, removeFromQueue} = slice.actions;
 
 export default slice.reducer;

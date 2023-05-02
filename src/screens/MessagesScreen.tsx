@@ -89,7 +89,6 @@ export default function MessagesScreen({
           scrollViewRef.current?.scrollToEnd({animated: false})
         }>
         <VStack px="2" pb="8" space="6">
-          {/* TODO no messages */}
           {conversation?.messages.length === 0 && (
             <Text color="text.50" mt="2">
               You don't have any messages yet.
@@ -100,6 +99,7 @@ export default function MessagesScreen({
               key={message.synchronizationKey}
               message={message}
               isMine={message.author.id === currentUser.id}
+              isHighlighted={'id' in message}
             />
           ))}
         </VStack>

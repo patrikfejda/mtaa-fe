@@ -1,6 +1,6 @@
 import {useIsFocused} from '@react-navigation/native';
 import {produce} from 'immer';
-import {Fab, Icon, Pressable, VStack, View} from 'native-base';
+import {Fab, Icon, Pressable, ScrollView, VStack} from 'native-base';
 import React, {useState} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AppAvatarItem from '../components/AppAvatarItem';
@@ -24,6 +24,20 @@ function getDirectConversationReciever(
   }
 
   return reciever;
+}
+
+function getConversationName(
+  conversation: Conversation | ConversationCreateStore,
+  currentUserId: number,
+) {
+  const conversationReceiver = getDirectConversationReciever(
+    conversation,
+    currentUserId,
+  );
+
+  return conversation.isGroup
+    ? conversation.name
+    : conversationReceiver.displayName || conversationReceiver.username;
 }
 
 function getLastConversationMessage(
@@ -60,9 +74,9 @@ function getConditionalConversationProps(
 }
 
 export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
-  // TODO maybe fetching somewhere else
-  const {data: dataUsers} = useGetUsersQuery();
-  const {data: dataConversations} = useGetUserConversationsQuery();
+  useGetUsersQuery();
+  useGetUserConversationsQuery();
+
   const currentUser = useAppSelector(selectCurrentUser);
 
   const conversations = useAppSelector(selectAllConversations);
@@ -79,23 +93,24 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
     }
 
     navigation.navigate('Messages', {
-      name: conversation.name,
+      name: getConversationName(conversation, currentUser.id),
       conversationId: (conversation as Conversation).id,
     });
   }
 
   return (
-    <View px="2" pb="2">
-      <VStack space="4">
+    <ScrollView>
+      <VStack px="2" pb="2" space="4">
         {conversations.map(conversation => (
           <Pressable
             onPress={() => onConversationPress(conversation)}
             key={conversation.synchronizationKey}
             borderRadius="sm"
             _pressed={{bgColor: 'muted.800'}}>
+            {/* @ts-ignore */}
             <AppAvatarItem
               isHighlighted={true}
-              title={conversation.name}
+              title={getConversationName(conversation, currentUser.id)}
               subtitle={
                 getLastConversationMessage(conversation) ||
                 'You have no messages yet'
@@ -119,6 +134,6 @@ export default function ChatsScreen({navigation}: TabScreenProps<'Chats'>) {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
       />
-    </View>
+    </ScrollView>
   );
 }

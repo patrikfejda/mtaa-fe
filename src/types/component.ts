@@ -32,6 +32,7 @@ export interface AppModalInstanceProps {
 export interface AppMessageProps {
   message: Message | MessageCreateStore;
   isMine: boolean;
+  isHighlighted?: boolean;
 }
 
 export interface AppToastProps {

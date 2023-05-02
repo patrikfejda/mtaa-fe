@@ -1,5 +1,6 @@
-import type {AnyAction, Dispatch, Middleware} from '@reduxjs/toolkit';
-import Config from 'react-native-config';
+import type {Middleware} from '@reduxjs/toolkit';
+import {api} from '../../services/api';
+import wsManager from '../../services/websocket';
 import type {
   Conversation,
   ConversationCreateRequest,
@@ -12,38 +13,49 @@ import {
   WebSocketClientEvent,
   WebSocketServerEvent,
 } from '../../types/websocket';
+import {logout} from '../authSlice';
 import {
   addConversation,
   addMessage,
   syncServerConversation,
   syncServerMessage,
 } from '../conversationsSlice';
-import {addToQueue, removeFromQueue} from '../websocketSlice';
+import {addToQueue, clearQueue, removeFromQueue} from '../websocketSlice';
 
-// TODO refactor all of this
-let ws: WebSocket;
-let intervalId;
+export const websocketMiddleware: Middleware = ({getState, dispatch}) => {
+  let isOffline = true;
 
-export function addWebsocketListeners(dispatch: Dispatch<AnyAction>) {
-  ws?.addEventListener('open', event => {
-    // TODO remove
-    console.log('websocketMiddleware open', event);
+  wsManager.onOpen(() => {
+    const {accessToken} = (getState() as AppRootState).auth;
+    const {queue} = (getState() as AppRootState).websocket;
+
+    if (isOffline && accessToken) {
+      isOffline = false;
+
+      api.endpoints.getUsers.initiate(undefined, {
+        subscribe: false,
+        forceRefetch: true,
+      });
+      api.endpoints.getUserConversations.initiate(undefined, {
+        subscribe: false,
+        forceRefetch: true,
+      });
+
+      for (const message of queue) {
+        wsManager.sendMessage(message);
+      }
+
+      dispatch(clearQueue());
+    }
   });
 
-  ws?.addEventListener('close', event => {
-    // TODO remove
-    console.log('websocketMiddleware close', event);
+  wsManager.onClose(event => {
+    if (event.code !== 1003 && event.code !== 1008) {
+      isOffline = true;
+    }
   });
-
-  ws?.addEventListener('error', event => {
-    console.log('websocketMiddleware error', event);
-  });
-
-  ws?.addEventListener('message', event => {
+  wsManager.onMessage(event => {
     const message = JSON.parse(event.data) as WebSocketMessage;
-
-    // TODO remove
-    console.log('websocketMiddleware recieved', message);
 
     switch (message.event) {
       case WebSocketServerEvent.NEW_CONVERSATION:
@@ -53,42 +65,30 @@ export function addWebsocketListeners(dispatch: Dispatch<AnyAction>) {
         dispatch(syncServerMessage(message.data as Message));
     }
   });
-}
 
-export const websocketMiddleware: Middleware = ({getState, dispatch}) => {
   return next => action => {
-    // TODO maybe memoize
     const {accessToken} = (getState() as AppRootState).auth;
+    const queueItem = (getState() as AppRootState).websocket.queue[0];
 
-    // TODO setInterval here
-    // TODO Get base url from .env
-    if (!intervalId && accessToken) {
-      // TODO remove
-      intervalId = setInterval(() => {
-        if (!ws || ws.readyState === WebSocket.CLOSED) {
-          // TODO remove
-          console.log('websocketMiddleware setInterval');
-          console.log('proccess env WS_BASE_URL', Config.WS_BASE_URL);
-          ws = new WebSocket(
-            `${Config.WS_BASE_URL}/conversations/ws?token=${accessToken}`,
-          );
-          addWebsocketListeners(dispatch);
-        }
-      }, 1000);
+    if (accessToken && wsManager.isWorkerRunning() === false) {
+      wsManager.startWorker(accessToken);
     }
 
-    if (addToQueue.match(action)) {
-      // TODO remove
-      console.log(
-        'websocketMiddleware sending',
-        JSON.stringify(action.payload),
-      );
+    if (logout.match(action)) {
+      wsManager.stopWorker();
+    }
 
-      ws?.send(JSON.stringify(action.payload));
+    if (
+      addToQueue.match(action) &&
+      queueItem &&
+      wsManager.sendMessage(queueItem)
+    ) {
       dispatch(removeFromQueue());
-    } else if (addConversation.match(action)) {
+    }
+
+    if (addConversation.match(action)) {
       const message: WebSocketMessage<ConversationCreateRequest> = {
-        // TODO accessToken could be null
+        // @ts-ignore
         token: accessToken,
         event: WebSocketClientEvent.CREATE_CONVERSATION,
         data: action.payload,
@@ -96,7 +96,7 @@ export const websocketMiddleware: Middleware = ({getState, dispatch}) => {
       dispatch(addToQueue(message));
     } else if (addMessage.match(action)) {
       const message: WebSocketMessage<MessageCreateRequest> = {
-        // TODO accessToken could be null
+        // @ts-ignore
         token: accessToken,
         event: WebSocketClientEvent.CREATE_MESSAGE,
         data: action.payload,

@@ -1,3 +1,4 @@
+import notifee from '@notifee/react-native';
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 import {produce} from 'immer';
 import {NativeBaseProvider, extendTheme} from 'native-base';
@@ -63,6 +64,30 @@ const nativeBaseTheme = extendTheme({
     mono: 'Roboto',
   },
 });
+
+async function onDisplayNotification() {
+  await notifee.requestPermission();
+
+  // Create a channel (required for Android)
+  const channelId = await notifee.createChannel({
+    id: 'default',
+    name: 'Default Channel',
+  });
+
+  // Display a notification
+  await notifee.displayNotification({
+    title: 'MTAA APP',
+    body: 'Welcome to our app',
+    android: {
+      channelId,
+      pressAction: {
+        id: 'default',
+      },
+    },
+  });
+}
+
+onDisplayNotification();
 
 function App(): JSX.Element {
   return (

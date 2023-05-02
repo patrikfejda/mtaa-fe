@@ -3,7 +3,11 @@ import React from 'react';
 import type {AppMessageProps} from '../types/component';
 import AppAvatar from './AppAvatar';
 
-export default function AppMessage({message, isMine}: AppMessageProps) {
+export default function AppMessage({
+  message,
+  isMine,
+  isHighlighted,
+}: AppMessageProps) {
   return (
     <HStack alignItems="flex-end" space="2">
       {isMine === false && (
@@ -24,6 +28,7 @@ export default function AppMessage({message, isMine}: AppMessageProps) {
           mt={isMine ? '2' : '0'}
           ml={isMine ? '56px' : '0'}
           mr={isMine === false ? '8' : '0'}
+          opacity={isHighlighted ? '1' : '0.5'}
           borderRadius="md"
           px="2.5"
           py="2">
